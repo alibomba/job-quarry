@@ -1,0 +1,20 @@
+general:
+-404
+-login/rejestracja
+-profil firmy**
+
+job seekers:
+-landing page**
+-feed/search results(bez zalogowania tez)**
+-podstrona oferty(bez zalogowania tez)**
+-profil(moga wejsc tylko firmy)**
+-zapisane oferty*
+-podsumowanie swoich aplikacji*
+
+
+companies:
+-moje oferty**
+-moje aplikacje(aktualizacja statusu aplikacji, wyslij wiadomosc do aplikanta, wyswietl cv, itp.)**
+-profil firmy(edycja)**
+-analityka
+-tworzenie oferty/edycja oferty
