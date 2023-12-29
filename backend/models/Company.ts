@@ -1,4 +1,5 @@
 import { model, Schema } from 'mongoose';
+import { Message, Offer } from '.';
 
 const company = new Schema({
     companyName: {
@@ -51,5 +52,16 @@ const company = new Schema({
         default: Date.now
     }
 });
+
+company.post('deleteOne', async function (doc) {
+    const messages = await Message.find({ company: doc._id });
+    const offers = await Offer.find({ company: doc._id });
+    for (let message of messages) {
+        await Message.deleteOne({ _id: message._id });
+    }
+    for (let offer of offers) {
+        await Offer.deleteOne({ _id: offer._id });
+    }
+})
 
 export default model('Company', company);

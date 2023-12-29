@@ -1,4 +1,5 @@
 import { model, Schema } from 'mongoose';
+import { Application, Message, Notification } from '.';
 
 const experience = new Schema({
     title: {
@@ -92,6 +93,22 @@ const user = new Schema({
     joinedAt: {
         type: Date,
         default: Date.now
+    }
+});
+
+user.post('deleteOne', async function (doc) {
+    const applications = await Application.find({ user: doc._id });
+    const messages = await Message.find({ user: doc._id });
+    const notifications = await Notification.find({ user: doc._id });
+
+    for (let application of applications) {
+        await Application.deleteOne({ _id: application._id });
+    }
+    for (let message of messages) {
+        await Message.deleteOne({ _id: message._id });
+    }
+    for (let notification of notifications) {
+        await Notification.deleteOne({ _id: notification._id });
     }
 });
 
