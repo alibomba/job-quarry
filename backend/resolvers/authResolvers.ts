@@ -39,6 +39,9 @@ export default {
             const newCompany = new Company({ companyName, email, password: passwordHash });
             try {
                 await newCompany.save();
+                return {
+                    success: true
+                }
             } catch (err) {
                 throw new GraphQLError('', { extensions: { code: 'SERVER_ERROR' } });
             }
@@ -58,6 +61,7 @@ export default {
                 isCompany = true;
                 entity = companyFound;
             }
+            if (!await bcrypt.compare(password, entity!.password)) throw new GraphQLError('Niepoprawny e-mail lub hasło', { extensions: { code: 'UNAUTHORIZED' } });
             const payload: MyJwtPayload = { _id: entity!._id, email: entity!.email, isCompany };
             const accessToken = jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: process.env.JWT_TTL });
             const refreshToken = jwt.sign(payload, process.env.JWT_REFRESH_SECRET as string);

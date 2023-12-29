@@ -1,7 +1,7 @@
 import { GraphQLError } from "graphql";
 import { MyContext, MyJwtPayload } from "../types";
 import verifyToken from "../utils/verifyToken";
-import { User } from "../models";
+import { Company, User } from "../models";
 
 
 async function contextAuthentication(context: MyContext): Promise<MyJwtPayload> {
@@ -16,7 +16,8 @@ async function contextAuthentication(context: MyContext): Promise<MyJwtPayload> 
         throw new GraphQLError(err.message, { extensions: { code: 'UNAUTHORIZED' } });
     }
     const userFound = await User.findById(payload._id);
-    if (!userFound) throw new GraphQLError('Użytkownik nie istnieje', { extensions: { code: 'UNAUTHORIZED' } });
+    const companyFound = await Company.findById(payload._id);
+    if (!userFound && !companyFound) throw new GraphQLError('Użytkownik nie istnieje', { extensions: { code: 'UNAUTHORIZED' } });
     return payload;
 }
 

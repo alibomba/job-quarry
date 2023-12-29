@@ -3,7 +3,7 @@ export default `#graphql
         email: String!
         name: String!
         surname: String!
-        age: Number!
+        age: Int!
         password: String!
     }
 
