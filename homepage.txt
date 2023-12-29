@@ -1,7 +1,0 @@
--header: logo, gap, oferty, (powiadomienia, profil, wyloguj/zaloguj sie,
-zarejestruj sie)
--hero(obrazek, heading i pod nim zaawansowany search bar wyjezdzajacy troche poza bg w dol)
--5 featured job listings(cta zobacz wiecej)
--how it works, step by step(fajne ui z klikaniem w numerek i popup z instrukcja)
--testimonials
--footer(logo, social media, regulamin serwisu, polityka prywatnosci, copyright text)

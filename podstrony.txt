@@ -1,6 +1,6 @@
 general:
--404
--login/rejestracja
+-404**
+-login/rejestracja**
 -profil firmy**
 
 job seekers:
@@ -8,13 +8,19 @@ job seekers:
 -feed/search results(bez zalogowania tez)**
 -podstrona oferty(bez zalogowania tez)**
 -profil(moga wejsc tylko firmy)**
--zapisane oferty*
--podsumowanie swoich aplikacji*
+-zapisane oferty**
+-podsumowanie swoich aplikacji**
 
 
 companies:
 -moje oferty**
 -moje aplikacje(aktualizacja statusu aplikacji, wyslij wiadomosc do aplikanta, wyswietl cv, itp.)**
 -profil firmy(edycja)**
--analityka
--tworzenie oferty/edycja oferty
+-tworzenie oferty/edycja oferty**
+-czaty**
+-analityka**:
+   -liczba wyswietlen
+   -CTR + pie chart jeden field to wyswietlenia bez klikniecia, drugi field wyswietlenia z kliknieciem
+   -liczba aplikacji
+   -ratio wyswietlen i aplikacji %
+   -wiek aplikacji (pie chart: not specified, 18-24, 25-34, 35-44, 45-54, 55-64, 65+)
