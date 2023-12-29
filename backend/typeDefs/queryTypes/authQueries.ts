@@ -1,3 +1,3 @@
-export default `#graphql
-    
+export default `
+    getAuth: Result
 `;
