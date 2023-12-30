@@ -1,3 +1,3 @@
 export default `
-    getAuth: Result
+    getAuth: AuthResult
 `;

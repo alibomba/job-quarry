@@ -11,9 +11,9 @@ import contextAuthentication from "../middleware/contextAuthentication";
 export default {
     Query: {
         async getAuth(__: unknown, args: unknown, context: MyContext) {
-            await contextAuthentication(context);
+            const { isCompany } = await contextAuthentication(context);
             return {
-                success: true
+                isCompany
             }
         }
     },
