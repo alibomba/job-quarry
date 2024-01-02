@@ -16,13 +16,14 @@
     width: 90px;
 }
 
-.main__register {
+.main__paragraph {
     font-size: 1.5rem;
     color: var(--black-65);
     text-align: center;
 }
 
-.main__register__link {
+.main__link {
+    font-size: 1.5rem;
     text-decoration: none;
     color: var(--secondary);
     font-weight: 500;

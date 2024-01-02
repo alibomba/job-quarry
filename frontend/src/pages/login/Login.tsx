@@ -122,7 +122,8 @@ const Login = () => {
                     loginError && <p className={styles.form__error} role='alert' aria-live='assertive'>{loginError}</p>
                 }
             </form>
-            <p className={styles.main__register}>Nie masz konta? <Link className={styles.main__register__link} to='/rejestracja'>Zarejestruj się</Link></p>
+            <p className={styles.main__paragraph}>Nie masz konta? <Link className={styles.main__link} to='/rejestracja'>Zarejestruj się</Link></p>
+            <Link to='/' className={styles.main__link}>Kontynuuj bez konta</Link>
         </main>
     )
 }

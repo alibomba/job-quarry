@@ -6,6 +6,8 @@ import DefaultLayout from "./layouts/DefaultLayout"
 import { Analytics, Application, Chat, CompanyProfile, CompanySettings, Feed, Homepage, Login, MyApplicationsCompany, MyApplicationsUser, MyOffers, NotFound, Offer, OfferForm, Register, UserProfile, UserSettings } from './pages';
 import httpLink from "./utils/httpLink"
 import wsLink from "./utils/wsLink"
+import CompanyRestrictedLayout from "./layouts/CompanyRestrictedLayout"
+import UserRestrictedLayout from "./layouts/UserRestrictedLayout"
 
 const link = split(
   ({ query }) => {
@@ -40,16 +42,20 @@ function App() {
               <Route path='/oferta/:id' element={<Offer />} />
               <Route path='/profil/:id' element={<UserProfile />} />
               <Route path='/firma/:id' element={<CompanyProfile />} />
+              <Route path='/czaty' element={<Chat />} />
+            </Route>
+            <Route path='/' element={<CompanyRestrictedLayout />}>
               <Route path='/moje-oferty' element={<MyOffers />} />
-              <Route path='/moje-aplikacja-firma' element={<MyApplicationsCompany />} />
-              <Route path='/moje-aplikacje' element={<MyApplicationsUser />} />
+              <Route path='/moje-aplikacje-firma' element={<MyApplicationsCompany />} />
               <Route path='/aplikacja/:id' element={<Application />} />
               <Route path='/ustawienia-firmy' element={<CompanySettings />} />
-              <Route path='/ustawienia' element={<UserSettings />} />
               <Route path='/dodaj-oferte' element={<OfferForm />} />
               <Route path='/edytuj-oferte/:id' element={<OfferForm />} />
               <Route path='/analityka/:id' element={<Analytics />} />
-              <Route path='/czaty' element={<Chat />} />
+            </Route>
+            <Route path='/' element={<UserRestrictedLayout />}>
+              <Route path='/moje-aplikacje' element={<MyApplicationsUser />} />
+              <Route path='/ustawienia' element={<UserSettings />} />
             </Route>
           </Routes>
         </BrowserRouter>
