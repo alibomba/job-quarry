@@ -16,6 +16,16 @@ export const COMPANY_REGISTER = gql`
     }
 `;
 
+export const LOGIN = gql`
+    mutation($loginInput: LoginInput!){
+        login(loginInput: $loginInput){
+            accessToken
+            refreshToken
+            isCompany
+        }
+    }
+`;
+
 export const REFRESH_TOKEN = gql`
     mutation($refreshToken: String!){
         refreshToken(refreshToken: $refreshToken){
