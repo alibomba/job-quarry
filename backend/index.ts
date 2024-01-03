@@ -59,6 +59,8 @@ async function main() {
 
     await server.start();
 
+    app.use('/storage', express.static(`${__dirname}/public`));
+
     app.use('/',
         cors({ origin: process.env.FRONTEND_URL }),
         express.json(),
@@ -67,7 +69,6 @@ async function main() {
         })
     );
 
-    app.use('/storage', express.static(`${__dirname}/public`));
 
     const PORT = process.env.PORT || 8000;
 
