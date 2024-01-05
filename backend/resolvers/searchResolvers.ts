@@ -7,7 +7,7 @@ export default {
     Query: {
         async search(__: unknown, searchInput: OfferSearchInput) {
             searchValidation(searchInput);
-            const { phrase, city, level, contractType, mode, technologies, salaryFrom, salaryTo } = searchInput;
+            const { searchInput: { phrase, city, level, contractType, mode, technologies, salaryFrom, salaryTo } } = searchInput;
             const query: OfferQueryType = {};
             if (phrase) {
                 query.$or = [

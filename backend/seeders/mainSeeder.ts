@@ -3,6 +3,7 @@ dotenv.config();
 import { Application, Company, Message, Notification, Offer, OfferThumbnailView, OfferView, RefreshToken, Technology, User } from "../models";
 import userSeeder from "./userSeeder";
 import companySeeder from "./companySeeder";
+import offerSeeder from './offerSeeder';
 import mongoose from "mongoose";
 
 async function truncate() {
@@ -23,6 +24,9 @@ async function main() {
     await truncate();
     await userSeeder();
     await companySeeder();
+    await offerSeeder();
+
+    console.log('DB Seeded');
 }
 
 main();

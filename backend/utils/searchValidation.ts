@@ -3,7 +3,7 @@ import { OfferSearchInput } from "../types";
 
 
 function searchValidation(searchInput: OfferSearchInput) {
-    const { phrase, city, salaryFrom, salaryTo } = searchInput
+    const { searchInput: { phrase, city, salaryFrom, salaryTo } } = searchInput
     if (phrase && phrase.length > 50) {
         throw new GraphQLError('Fraza może mieć maksymalnie 50 znaków', { extensions: { code: 'VALIDATION_ERROR' } });
     }
