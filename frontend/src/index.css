@@ -12,7 +12,7 @@
     /* colors */
     --primary: #C700EB;
     --primary-hover: #B600DA;
-    --primary-light: rgba(199, 0, 235, .35);
+    --primary-light: rgb(235, 166, 248);
     --secondary: #00EBA3;
     --secondary-hover: #00DA92;
     --black: #170C18;

@@ -22,6 +22,7 @@ const DefaultLayout = () => {
                 const { data, error } = await myNotificationsQuery();
                 if (error) {
                     setError('Coś poszło nie tak, spróbuj ponownie później');
+                    return;
                 }
                 dispatch(setIsSomethingNew(areThereNewNotifications(data.getMyNotifications)));
             }

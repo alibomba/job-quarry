@@ -7,5 +7,6 @@ export default `#graphql
         ${authQueries}
         ${notificationQueries}
         ${searchQueries}
+        getTechnologies: [String!]!
     }
 `;
