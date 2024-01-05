@@ -22,6 +22,12 @@ export default `#graphql
         createdAt: DateTime!
     }
 
+    type OfferPaginationResponse{
+        currentPage: Int!
+        lastPage: Int!
+        data: [Offer!]!
+    }
+
     enum Level{
         JUNIOR
         MID
@@ -53,5 +59,6 @@ export default `#graphql
         technologies: [String!]
         salaryFrom: Int
         salaryTo: Int
+        page: Int!
     }
 `;

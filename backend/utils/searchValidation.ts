@@ -1,7 +1,6 @@
 import { GraphQLError } from "graphql";
 import { OfferSearchInput } from "../types";
 
-
 function searchValidation(searchInput: OfferSearchInput) {
     const { searchInput: { phrase, city, salaryFrom, salaryTo } } = searchInput
     if (phrase && phrase.length > 50) {

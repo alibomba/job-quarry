@@ -11,7 +11,8 @@ type OfferSearchInput = {
         mode?: keyof typeof WorkMode,
         technologies?: string[],
         salaryFrom?: number,
-        salaryTo?: number
+        salaryTo?: number,
+        page: number
     }
 }
 
