@@ -4,6 +4,7 @@ import { Application, Company, Message, Notification, Offer, OfferThumbnailView,
 import userSeeder from "./userSeeder";
 import companySeeder from "./companySeeder";
 import offerSeeder from './offerSeeder';
+import technologySeeder from './technologySeeder';
 import mongoose from "mongoose";
 
 async function truncate() {
@@ -25,6 +26,7 @@ async function main() {
     await userSeeder();
     await companySeeder();
     await offerSeeder();
+    await technologySeeder();
 
     console.log('DB Seeded');
 }
