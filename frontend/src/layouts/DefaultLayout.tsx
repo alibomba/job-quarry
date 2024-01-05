@@ -16,7 +16,6 @@ const DefaultLayout = () => {
     const [myNotificationsQuery] = useLazyQuery(GET_MY_NOTIFICATIONS);
     const [error, setError] = useState<string | null>(null);
 
-
     useEffect(() => {
         async function fetchData() {
             if (!isLoading && isAuthorized) {
