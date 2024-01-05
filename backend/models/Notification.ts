@@ -15,10 +15,17 @@ const notification = new Schema({
         required: true,
         maxLength: 200
     },
-    recipient: {
+    userRecipient: {
         type: Types.ObjectId,
-        ref: 'User',
-        required: true
+        ref: 'User'
+    },
+    companyRecipient: {
+        type: Types.ObjectId,
+        ref: 'Company'
+    },
+    seen: {
+        type: Boolean,
+        default: false
     },
     createdAt: {
         type: Date,

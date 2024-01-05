@@ -26,10 +26,26 @@ export const LOGIN = gql`
     }
 `;
 
+export const LOGOUT = gql`
+    mutation($refreshToken: String!){
+        logout(refreshToken: $refreshToken){
+            success
+        }
+    }
+`;
+
 export const REFRESH_TOKEN = gql`
     mutation($refreshToken: String!){
         refreshToken(refreshToken: $refreshToken){
             accessToken
+        }
+    }
+`;
+
+export const SET_NOTIFICATIONS_TO_READ = gql`
+    mutation{
+        setNotificationsToRead{
+            success
         }
     }
 `;

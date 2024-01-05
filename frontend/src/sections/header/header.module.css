@@ -4,6 +4,7 @@
     justify-content: space-between;
     gap: 2em;
     padding: 1em 2em;
+    z-index: 10000;
 }
 
 .header__logo {
@@ -41,11 +42,23 @@
     color: var(--primary);
     cursor: pointer;
     transition: var(--transition);
+    position: relative;
 }
 
 .header__navIcon:hover,
 .header__navIcon:focus {
     color: var(--primary-hover);
+}
+
+.header__navIcon_unread::after {
+    content: '';
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: red;
+    top: -3px;
+    right: 0;
 }
 
 .header__navButton {
@@ -116,6 +129,11 @@
 
     .header__navIcon {
         font-size: 1.6rem;
+    }
+
+    .header__navIcon_unread::after {
+        width: 10px;
+        height: 10px;
     }
 
     .header__navButton {

@@ -7,3 +7,15 @@ export const GET_AUTH = gql`
         }
     }
 `;
+
+export const GET_MY_NOTIFICATIONS = gql`
+    query{
+        getMyNotifications{
+            _id
+            image
+            message
+            redirect
+            seen
+        }
+    }
+`;
