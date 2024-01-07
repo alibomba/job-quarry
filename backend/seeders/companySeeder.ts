@@ -8,6 +8,7 @@ async function companySeeder() {
             companyName: 'Tech sp.z.o.o',
             password: '$2b$10$a5xra9gFr6yHwrWmDIgNZ.70U3KNLeti9gRynCzi/8Qh2HT9faRWq',
             website: "https://tech.com",
+            logo: 'tech-spzoo.png',
             socialMedia: {
                 facebook: "https://facebook.com/tech-spzoo",
                 instagram: "https://instagram.com/tech-spzoo",

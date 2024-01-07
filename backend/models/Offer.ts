@@ -1,7 +1,28 @@
 import { model, Schema, Types } from 'mongoose';
 import { Application, OfferThumbnailView, OfferView } from '.';
+import { CompanyI } from './Company';
 
-const offer = new Schema({
+export interface OfferI {
+    title: string,
+    mode: string,
+    location: string,
+    level: string,
+    expiresAt: Date,
+    contractType: string,
+    salary: number,
+    requiredTechnologies: string[],
+    optionalTechnologies: string[],
+    description: string,
+    tasks: string[],
+    required: string[],
+    optional: string[],
+    benefits: string[],
+    recruitmentStages: string[],
+    company: string | CompanyI,
+    createdAt: Date
+}
+
+const offer = new Schema<OfferI>({
     title: {
         type: String,
         required: true,

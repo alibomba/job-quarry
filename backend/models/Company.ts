@@ -1,7 +1,23 @@
-import { model, Schema } from 'mongoose';
+import { Document, model, Schema } from 'mongoose';
 import { Message, Offer } from '.';
 
-const company = new Schema({
+export interface CompanyI extends Document {
+    companyName: string,
+    email: string,
+    password: string,
+    website?: string,
+    logo?: string,
+    socialMedia: {
+        facebook?: string,
+        instagram?: string,
+        linkedin?: string,
+        github?: string
+    },
+    description?: string,
+    joinedAt: Date
+}
+
+const company = new Schema<CompanyI>({
     companyName: {
         type: String,
         required: true,
@@ -62,6 +78,6 @@ company.post('deleteOne', async function (doc) {
     for (let offer of offers) {
         await Offer.deleteOne({ _id: offer._id });
     }
-})
+});
 
 export default model('Company', company);
