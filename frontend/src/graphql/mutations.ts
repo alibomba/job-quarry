@@ -49,3 +49,11 @@ export const SET_NOTIFICATIONS_TO_READ = gql`
         }
     }
 `;
+
+export const BOOKMARK = gql`
+    mutation($bookmarkId: String!){
+        bookmark(id: $bookmarkId){
+            isBookmarked
+        }
+    }
+`;

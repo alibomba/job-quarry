@@ -8,3 +8,4 @@ export { default as OfferThumbnailView } from './OfferThumbnailView';
 export { default as OfferView } from './OfferView';
 export { default as Notification } from './Notification';
 export { default as Message } from './Message';
+export { default as Bookmark } from './Bookmark';

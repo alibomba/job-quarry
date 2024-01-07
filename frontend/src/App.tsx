@@ -3,7 +3,7 @@ import { getMainDefinition } from "@apollo/client/utilities"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import AuthProvider from "./contexts/AuthProvider"
 import DefaultLayout from "./layouts/DefaultLayout"
-import { Analytics, Application, Chat, CompanyProfile, CompanySettings, Feed, Homepage, Login, MyApplicationsCompany, MyApplicationsUser, MyOffers, NotFound, Offer, OfferForm, Register, UserProfile, UserSettings } from './pages';
+import { Bookmarks, Analytics, Application, Chat, CompanyProfile, CompanySettings, Feed, Homepage, Login, MyApplicationsCompany, MyApplicationsUser, MyOffers, NotFound, Offer, OfferForm, Register, UserProfile, UserSettings } from './pages';
 import httpLink from "./utils/httpLink"
 import wsLink from "./utils/wsLink"
 import CompanyRestrictedLayout from "./layouts/CompanyRestrictedLayout"
@@ -54,6 +54,7 @@ function App() {
               <Route path='/analityka/:id' element={<Analytics />} />
             </Route>
             <Route path='/' element={<UserRestrictedLayout />}>
+              <Route path='/zapisane' element={<Bookmarks />} />
               <Route path='/moje-aplikacje' element={<MyApplicationsUser />} />
               <Route path='/ustawienia' element={<UserSettings />} />
             </Route>

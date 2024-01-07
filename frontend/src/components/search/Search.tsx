@@ -65,13 +65,21 @@ const Search = ({ className, variant }: Props) => {
         });
     }
 
+    function searchAndRedirect(e: React.FormEvent) {
+        e.preventDefault();
+    }
+
+    async function search(e: React.FormEvent) {
+        e.preventDefault();
+    }
+
     if (error) {
         return <Error>{error}</Error>
     }
 
     return (
         <>
-            <form className={`${styles.search} ${className && className}`}>
+            <form onSubmit={variant === 'homepage' ? searchAndRedirect : search} className={`${styles.search} ${className && className}`}>
                 <div className={styles.search__row}>
                     <input className={styles.search__input} aria-label='Fraza' placeholder='Fraza' type="text" maxLength={50} />
                     <div className={styles.search__inputContainer}>

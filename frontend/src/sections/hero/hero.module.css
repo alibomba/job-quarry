@@ -6,6 +6,7 @@
     background-position: center;
     position: relative;
     z-index: 1;
+    margin-bottom: 20em;
 }
 
 .hero::before {
@@ -29,13 +30,34 @@
     top: 10em;
 }
 
+@media(max-width:922px) {
+    .hero {
+        margin-bottom: 30em;
+    }
+}
+
+@media(max-width:878px) {
+    .hero {
+        margin-bottom: 36em;
+    }
+}
+
 @media(max-width:650px) {
+    .hero {
+        margin-bottom: 27em;
+    }
+
     .hero__search {
         top: 13em;
     }
 }
 
-@media(max-width:520px) {
+@media(max-width:530px) {
+    .hero {
+        padding: 3em 1em;
+        margin-bottom: 18em;
+    }
+
     .hero {
         padding: 3em 1em;
     }
@@ -45,7 +67,23 @@
     }
 }
 
-@media(max-width:360px) {
+@media(max-width:424px) {
+    .hero {
+        margin-bottom: 21em;
+    }
+}
+
+@media(max-width:392px) {
+    .hero {
+        margin-bottom: 24.5em;
+    }
+}
+
+@media(max-width:362px) {
+    .hero {
+        margin-bottom: 28em;
+    }
+
     .hero__heading {
         font-size: 2.6rem;
     }

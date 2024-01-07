@@ -31,3 +31,32 @@ export const GET_TECHNOLOGIES = gql`
         getTechnologies
     }
 `;
+
+export const OFFER_SEARCH = gql`
+    query($searchInput: OfferSearchInput!){
+        search(searchInput: $searchInput){
+            currentPage
+            lastPage
+            data{
+                _id
+                title
+                company{
+                    companyName
+                    logo
+                }
+                mode
+                location
+                requiredTechnologies
+                salary
+            }
+        }
+    }
+`;
+
+export const IS_BOOKMARKED = gql`
+    query($isBookmarkedId: String!){
+        isBookmarked(id: $isBookmarkedId){
+            success
+        }
+    }
+`;

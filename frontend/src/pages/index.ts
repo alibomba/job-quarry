@@ -15,3 +15,4 @@ export { default as OfferForm } from './offerForm/OfferForm';
 export { default as Register } from './register/Register';
 export { default as UserProfile } from './userProfile/UserProfile';
 export { default as UserSettings } from './userSettings/UserSettings';
+export { default as Bookmarks } from './bookmarks/Bookmarks';

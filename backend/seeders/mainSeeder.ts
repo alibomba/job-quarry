@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 dotenv.config();
-import { Application, Company, Message, Notification, Offer, OfferThumbnailView, OfferView, RefreshToken, Technology, User } from "../models";
+import { Application, Company, Message, Notification, Offer, OfferThumbnailView, OfferView, RefreshToken, Technology, User, Bookmark } from "../models";
 import userSeeder from "./userSeeder";
 import companySeeder from "./companySeeder";
 import offerSeeder from './offerSeeder';
@@ -18,6 +18,7 @@ async function truncate() {
     await RefreshToken.deleteMany();
     await Technology.deleteMany();
     await User.deleteMany();
+    await Bookmark.deleteMany();
 }
 
 async function main() {

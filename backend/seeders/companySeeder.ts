@@ -8,7 +8,6 @@ async function companySeeder() {
             companyName: 'Tech sp.z.o.o',
             password: '$2b$10$a5xra9gFr6yHwrWmDIgNZ.70U3KNLeti9gRynCzi/8Qh2HT9faRWq',
             website: "https://tech.com",
-            logo: "tech-spzoo.png",
             socialMedia: {
                 facebook: "https://facebook.com/tech-spzoo",
                 instagram: "https://instagram.com/tech-spzoo",
@@ -23,7 +22,6 @@ async function companySeeder() {
             email: 'techsolutions@example.com',
             password: '$2b$10$a5xra9gFr6yHwrWmDIgNZ.70U3KNLeti9gRynCzi/8Qh2HT9faRWq',
             website: 'https://techsolutions.com',
-            logo: 'tech-solutions.png',
             socialMedia: {
                 facebook: 'https://facebook.com/techsolutions',
                 instagram: 'https://instagram.com/techsolutions',
@@ -38,7 +36,6 @@ async function companySeeder() {
             email: 'innovatelabs@example.com',
             password: '$2b$10$a5xra9gFr6yHwrWmDIgNZ.70U3KNLeti9gRynCzi/8Qh2HT9faRWq',
             website: 'https://innovatelabs.io',
-            logo: 'innovate-labs.png',
             socialMedia: {
                 facebook: 'https://facebook.com/innovatelabs',
                 instagram: 'https://instagram.com/innovatelabs',
@@ -53,7 +50,6 @@ async function companySeeder() {
             email: 'dynamicsolutions@example.com',
             password: '$2b$10$a5xra9gFr6yHwrWmDIgNZ.70U3KNLeti9gRynCzi/8Qh2HT9faRWq',
             website: 'https://dynamicsolutions.co',
-            logo: 'dynamic-solutions.png',
             socialMedia: {
                 facebook: 'https://facebook.com/dynamicsolutions',
                 instagram: 'https://instagram.com/dynamicsolutions',
@@ -68,7 +64,6 @@ async function companySeeder() {
             email: 'infiniteinnovations@example.com',
             password: '$2b$10$a5xra9gFr6yHwrWmDIgNZ.70U3KNLeti9gRynCzi/8Qh2HT9faRWq',
             website: 'https://infiniteinnovations.io',
-            logo: 'infinite-innovations.png',
             socialMedia: {
                 facebook: 'https://facebook.com/infiniteinnovations',
                 instagram: 'https://instagram.com/infiniteinnovations',
@@ -83,7 +78,6 @@ async function companySeeder() {
             email: 'greentechhub@example.com',
             password: '$2b$10$a5xra9gFr6yHwrWmDIgNZ.70U3KNLeti9gRynCzi/8Qh2HT9faRWq',
             website: 'https://greentechhub.org',
-            logo: 'greentech-hub.png',
             socialMedia: {
                 facebook: 'https://facebook.com/greentechhub',
                 instagram: 'https://instagram.com/greentechhub',
@@ -98,7 +92,6 @@ async function companySeeder() {
             email: 'futurescapetech@example.com',
             password: '$2b$10$a5xra9gFr6yHwrWmDIgNZ.70U3KNLeti9gRynCzi/8Qh2HT9faRWq',
             website: 'https://futurescapetech.com',
-            logo: 'futurescape-technologies.png',
             socialMedia: {
                 facebook: 'https://facebook.com/futurescapetech',
                 instagram: 'https://instagram.com/futurescapetech',
@@ -113,7 +106,6 @@ async function companySeeder() {
             email: 'codecraft@example.com',
             password: '$2b$10$a5xra9gFr6yHwrWmDIgNZ.70U3KNLeti9gRynCzi/8Qh2HT9faRWq',
             website: 'https://codecraftinnovations.dev',
-            logo: 'codecraft-innovations.png',
             socialMedia: {
                 facebook: 'https://facebook.com/codecraftinnovations',
                 instagram: 'https://instagram.com/codecraftinnovations',

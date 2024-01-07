@@ -6,7 +6,8 @@ import queryTypes from "./queryTypes";
 import mutationTypes from "./mutationTypes";
 import searchTypes from "./searchTypes";
 import subscriptionTypes from "./subscriptionTypes";
+import offerTypes from "./offerTypes";
 
-export default `${generalTypes} ${authTypes} ${notificationTypes} ${searchTypes}
+export default `${generalTypes} ${authTypes} ${notificationTypes} ${offerTypes} ${searchTypes}
 ${queryTypes} ${mutationTypes} `;
 // ${subscriptionTypes}
