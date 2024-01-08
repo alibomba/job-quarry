@@ -7,6 +7,7 @@ import styles from './feed.module.css';
 import Loading from '../../components/loading/Loading';
 import Error from '../../components/error/Error';
 import OfferTile from '../../components/offerTile/OfferTile';
+import Pagination from '../../components/pagination/Pagination';
 
 const Feed = () => {
     const location = useLocation();
@@ -53,9 +54,9 @@ const Feed = () => {
                 }
             } else {
                 querySearchInput = searchInput;
+                setPage(1);
             }
             querySearchInput.page = 1;
-            console.log(querySearchInput);
             const { data, error } = await searchQuery({ variables: { searchInput: querySearchInput } });
             if (error) {
                 setError('Coś poszło nie tak, spróbuj ponownie później...');
@@ -68,6 +69,23 @@ const Feed = () => {
         fetchData();
         isMounted.current = true;
     }, [searchInput]);
+
+    useEffect(() => {
+        async function fetchData() {
+            if (isMounted.current) {
+                setIsLoading(true);
+                const { data, error } = await searchQuery({ variables: { searchInput: { ...searchInput, page } } });
+                if (error) {
+                    setError('Coś poszło nie tak, spróbuj ponownie później...');
+                    return;
+                }
+                setOffers(data.search);
+                setIsLoading(false);
+            }
+        }
+
+        fetchData();
+    }, [page]);
 
     if (error) {
         return <Error>{error}</Error>
@@ -82,27 +100,32 @@ const Feed = () => {
                     isLoading && <Loading />
                 }
                 {
-                    offers && offers.data.length > 0 ? offers.data.map(offer => {
-                        return (
-                            <OfferTile
-                                key={offer._id}
-                                _id={offer._id}
-                                title={offer.title}
-                                location={offer.location}
-                                company={offer.company}
-                                mode={offer.mode}
-                                salary={offer.salary}
-                                requiredTechnologies={offer.requiredTechnologies}
-                            />
-                        )
-                    })
+                    offers && offers.data.length > 0 ?
+                        <>
+                            {
+                                offers.data.map(offer => {
+                                    return (
+                                        <OfferTile
+                                            key={offer._id}
+                                            _id={offer._id}
+                                            title={offer.title}
+                                            location={offer.location}
+                                            company={offer.company}
+                                            mode={offer.mode}
+                                            salary={offer.salary}
+                                            requiredTechnologies={offer.requiredTechnologies}
+                                        />
+                                    )
+                                })
+                            }
+                            {
+                                offers.lastPage > 1 && <Pagination lastPage={offers.lastPage} page={page} setPage={setPage} />
+                            }
+                        </>
                         :
                         <p className={styles.main__noResults}>Brak wyników</p>
                 }
             </div>
-            {/* <div className={styles.main__pagination}>
-
-            </div> */}
         </main>
     )
 }
