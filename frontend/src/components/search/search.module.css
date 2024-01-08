@@ -76,8 +76,7 @@
     transition: var(--transition);
 }
 
-.search__button:hover,
-.search__button:focus {
+.search__button:hover {
     background-color: #D2D2D2;
 }
 

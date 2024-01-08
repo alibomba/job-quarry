@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Error from '../error/Error';
+import { useNavigate } from 'react-router-dom';
 import { useLazyQuery, useQuery } from '@apollo/client';
 import styles from './search.module.css';
 import { GET_TECHNOLOGIES, LOCATION_AUTOCOMPLETE } from '../../graphql/queries';
@@ -8,9 +9,11 @@ import { IoMdClose } from 'react-icons/io';
 interface Props {
     className?: string;
     variant: 'homepage' | 'search';
+    setSearchInput?: React.Dispatch<React.SetStateAction<SearchInput>>
 }
 
-const Search = ({ className, variant }: Props) => {
+const Search = ({ className, variant, setSearchInput }: Props) => {
+    const navigate = useNavigate();
     const [autocompleteQuery] = useLazyQuery(LOCATION_AUTOCOMPLETE);
     useQuery(GET_TECHNOLOGIES, {
         onCompleted: data => setTechnologies(data.getTechnologies)
@@ -38,7 +41,6 @@ const Search = ({ className, variant }: Props) => {
     }
 
     function autocompleteOff(e: React.KeyboardEvent) {
-        console.log(e.key);
         if (e.key === 'Escape') {
             setLocationAutocomplete([]);
         }
@@ -67,10 +69,84 @@ const Search = ({ className, variant }: Props) => {
 
     function searchAndRedirect(e: React.FormEvent) {
         e.preventDefault();
+        const form = e.target as HTMLFormElement;
+        const phrase = form.querySelector('#phrase') as HTMLInputElement;
+        const city = form.querySelector('#city') as HTMLInputElement;
+        const level = form.querySelector('#level') as HTMLInputElement;
+        const contractType = form.querySelector('#contractType') as HTMLInputElement;
+        const mode = form.querySelector('#mode') as HTMLInputElement;
+        const salaryFrom = form.querySelector('#salaryFrom') as HTMLInputElement;
+        const salaryTo = form.querySelector('#salaryTo') as HTMLInputElement;
+
+        const url = new URL('https://test.com/przegladaj');
+        if (phrase.value) {
+            url.searchParams.set('phrase', phrase.value);
+        }
+        if (city.value) {
+            url.searchParams.set('city', city.value);
+        }
+        if (level.value) {
+            url.searchParams.set('level', level.value);
+        }
+        if (contractType.value) {
+            url.searchParams.set('contractType', contractType.value);
+        }
+        if (mode.value) {
+            url.searchParams.set('mode', mode.value);
+        }
+        if (technologiesChecked.length > 0) {
+            url.searchParams.set('technologies', JSON.stringify(technologiesChecked));
+        }
+        if (salaryFrom.value) {
+            url.searchParams.set('salaryFrom', salaryFrom.value);
+        }
+        if (salaryTo.value) {
+            url.searchParams.set('salaryTo', salaryTo.value);
+        }
+        const redirect = `${url.pathname}${url.search}`;
+        navigate(encodeURI(redirect));
     }
 
-    async function search(e: React.FormEvent) {
+    function search(e: React.FormEvent) {
         e.preventDefault();
+        const form = e.target as HTMLFormElement;
+        const phrase = form.querySelector('#phrase') as HTMLInputElement;
+        const city = form.querySelector('#city') as HTMLInputElement;
+        const level = form.querySelector('#level') as HTMLInputElement;
+        const contractType = form.querySelector('#contractType') as HTMLInputElement;
+        const mode = form.querySelector('#mode') as HTMLInputElement;
+        const salaryFrom = form.querySelector('#salaryFrom') as HTMLInputElement;
+        const salaryTo = form.querySelector('#salaryTo') as HTMLInputElement;
+        if (setSearchInput) {
+            setSearchInput(() => {
+                const newValue: SearchInput = {};
+                if (phrase.value) {
+                    newValue.phrase = phrase.value;
+                }
+                if (city.value) {
+                    newValue.city = city.value;
+                }
+                if (level.value) {
+                    newValue.level = level.value;
+                }
+                if (contractType.value) {
+                    newValue.contractType = contractType.value;
+                }
+                if (mode.value) {
+                    newValue.mode = mode.value;
+                }
+                if (technologiesChecked.length > 0) {
+                    newValue.technologies = technologiesChecked;
+                }
+                if (salaryFrom.value) {
+                    newValue.salaryFrom = parseInt(salaryFrom.value);
+                }
+                if (salaryTo.value) {
+                    newValue.salaryTo = parseInt(salaryTo.value);
+                }
+                return newValue;
+            });
+        }
     }
 
     if (error) {
@@ -81,9 +157,9 @@ const Search = ({ className, variant }: Props) => {
         <>
             <form onSubmit={variant === 'homepage' ? searchAndRedirect : search} className={`${styles.search} ${className && className}`}>
                 <div className={styles.search__row}>
-                    <input className={styles.search__input} aria-label='Fraza' placeholder='Fraza' type="text" maxLength={50} />
+                    <input id='phrase' className={styles.search__input} aria-label='Fraza' placeholder='Fraza' type="text" maxLength={50} />
                     <div className={styles.search__inputContainer}>
-                        <input ref={locationRef} onChange={autocomplete} onKeyDown={autocompleteOff} className={`${styles.search__input} ${locationAutocomplete.length > 0 && styles.search__input_square}`} aria-label='Miasto' placeholder='Miasto' type="text" maxLength={40} />
+                        <input autoComplete='off' id='city' ref={locationRef} onChange={autocomplete} onKeyDown={autocompleteOff} className={`${styles.search__input} ${locationAutocomplete.length > 0 && styles.search__input_square}`} aria-label='Miasto' placeholder='Miasto' type="text" maxLength={40} />
                         {
                             locationAutocomplete.length > 0 &&
                             <div className={styles.search__autocomplete}>
@@ -97,7 +173,7 @@ const Search = ({ className, variant }: Props) => {
                             </div>
                         }
                     </div>
-                    <select className={styles.search__input} aria-label='Poziom'>
+                    <select id='level' className={styles.search__input} aria-label='Poziom'>
                         <option value="">Poziom</option>
                         <option value="JUNIOR">Junior</option>
                         <option value="MID">Mid</option>
@@ -105,7 +181,7 @@ const Search = ({ className, variant }: Props) => {
                     </select>
                 </div>
                 <div className={styles.search__row}>
-                    <select className={styles.search__input} aria-label='Typ umowy'>
+                    <select id='contractType' className={styles.search__input} aria-label='Typ umowy'>
                         <option value="">Typ umowy</option>
                         <option value="TYMCZASOWA">Tymczasowa</option>
                         <option value="UMOWA_O_PRACE">Umowa o Pracę</option>
@@ -115,7 +191,7 @@ const Search = ({ className, variant }: Props) => {
                         <option value="B2B">B2B</option>
                         <option value="STAZ">Staż</option>
                     </select>
-                    <select className={styles.search__input} aria-label='Tryb pracy'>
+                    <select id='mode' className={styles.search__input} aria-label='Tryb pracy'>
                         <option value="">Tryb pracy</option>
                         <option value="STACJONARNIE">Stacjonarnie</option>
                         <option value="ZDALNIE">Zdalnie</option>
@@ -124,8 +200,8 @@ const Search = ({ className, variant }: Props) => {
                     <button onClick={() => setTechnologiesVisible(true)} className={styles.search__button} type='button'>Technologie</button>
                 </div>
                 <div className={styles.search__row}>
-                    <input className={styles.search__input} aria-label='Płaca od' placeholder='Płaca od' type="number" min={0} />
-                    <input className={styles.search__input} aria-label='Płaca do' placeholder='Płaca do' type="number" min={0} />
+                    <input id='salaryFrom' className={styles.search__input} aria-label='Płaca od' placeholder='Płaca od' type="number" min={0} />
+                    <input id='salaryTo' className={styles.search__input} aria-label='Płaca do' placeholder='Płaca do' type="number" min={0} />
                     <button className={styles.search__button}>Wyszukaj</button>
                 </div>
             </form>

@@ -1,2 +1,3 @@
 -graphql subscriptions w notifications component
 -search submit handlers
+-uncomment aws pulling logos in search resolvers

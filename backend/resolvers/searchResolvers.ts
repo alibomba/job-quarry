@@ -44,19 +44,26 @@ export default {
             const PER_PAGE = 6;
             const count = await Offer.countDocuments(query);
             const lastPage = Math.ceil(count / PER_PAGE);
+            if (count === 0) {
+                return {
+                    currentPage: 1,
+                    lastPage: 1,
+                    data: []
+                }
+            }
             if (page > lastPage) throw new GraphQLError(`Jest tylko ${lastPage} stron`, { extensions: { code: 'VALIDATION_ERROR' } });
             const offset = (page - 1) * PER_PAGE;
             const offers = await Offer.find(query).skip(offset).limit(PER_PAGE).sort({ createdAt: -1 }).populate('company');
-            const offersWithLogos = await Promise.all(offers.map(async offer => {
-                if (typeof offer.company !== 'string' && offer.company.logo) {
-                    offer.company.logo = await getAWSCompanyLogo(offer.company.logo);
-                }
-                return offer;
-            }));
+            // const offersWithLogos = await Promise.all(offers.map(async offer => {
+            //     if (typeof offer.company !== 'string' && offer.company.logo) {
+            //         offer.company.logo = await getAWSCompanyLogo(offer.company.logo);
+            //     }
+            //     return offer;
+            // }));
             return {
                 currentPage: page,
                 lastPage,
-                data: offersWithLogos
+                data: offers
             }
         },
         async locationAutocomplete(__: unknown, { phrase }: { phrase: string }) {
