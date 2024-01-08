@@ -5,7 +5,7 @@ import { IoMdClose } from 'react-icons/io';
 import styles from './howItWorks.module.css';
 
 const HowItWorks = () => {
-    const [stepActive, setStepActive] = useState<number | null>(0);
+    const [stepActive, setStepActive] = useState<number | null>(null);
 
     return (
         <section className={styles.section}>

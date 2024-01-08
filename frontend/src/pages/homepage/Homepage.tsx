@@ -1,4 +1,4 @@
-import { Hero, OffersHomepage, HowItWorks } from '../../sections';
+import { Hero, OffersHomepage, HowItWorks, Testimonials } from '../../sections';
 
 import styles from './homepage.module.css';
 
@@ -8,6 +8,7 @@ const Homepage = () => {
             <Hero />
             <OffersHomepage />
             <HowItWorks />
+            <Testimonials />
         </>
     )
 }
