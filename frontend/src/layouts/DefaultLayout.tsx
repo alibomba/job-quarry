@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setIsSomethingNew } from '../state/notificationSlice';
 import areThereNewNotifications from '../utils/areThereNewNotifications';
 import { Outlet } from "react-router-dom";
-import { Header } from "../sections";
+import { Header, Footer } from "../sections";
 import { RootState } from '../state/store';
 import Error from '../components/error/Error';
 import Loading from '../components/loading/Loading';
@@ -44,6 +44,7 @@ const DefaultLayout = () => {
         <>
             <Header />
             <Outlet />
+            <Footer />
         </>
     )
 }
