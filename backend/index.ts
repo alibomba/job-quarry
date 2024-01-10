@@ -13,6 +13,7 @@ import { PubSub } from 'graphql-subscriptions';
 import mongoose from 'mongoose';
 import typeDefs from './typeDefs';
 import resolvers from './resolvers';
+import fileUploadRoutes from './routes/fileUploadRoutes';
 
 const app: Application = express();
 
@@ -59,11 +60,12 @@ async function main() {
 
     await server.start();
 
+    app.use(cors({ origin: process.env.FRONTEND_URL }));
+    app.use(express.json());
     app.use('/storage', express.static(`${__dirname}/public`));
+    app.use('/api', fileUploadRoutes);
 
     app.use('/',
-        cors({ origin: process.env.FRONTEND_URL }),
-        express.json(),
         expressMiddleware(server, {
             context: async ({ req }) => ({ authHeader: req.headers?.authorization, pubsub })
         })

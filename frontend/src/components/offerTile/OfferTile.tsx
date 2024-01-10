@@ -20,7 +20,7 @@ const OfferTile = ({ _id, title, company: { companyName, logo }, mode, location,
     const [popup, setPopup] = useState<Popup>({ active: false, type: 'good', content: null });
     const [error, setError] = useState<string | null>(null);
     const [isBookmarkedQuery] = useLazyQuery(IS_BOOKMARKED);
-    const [bookmarkMutation] = useMutation(BOOKMARK);
+    const [bookmarkMutation] = useMutation(BOOKMARK, { refetchQueries: [{ query: IS_BOOKMARKED }] });
     const { isAuthorized, isCompany, isLoading } = useSelector((state: RootState) => state.auth);
 
     useEffect(() => {

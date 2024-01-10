@@ -20,13 +20,13 @@ export default `#graphql
         password: String!
     }
 
-    type AuthResult{
-        isCompany: Boolean!
-    }
-
     type LoginResult{
         accessToken: String!
         refreshToken: String!
+        isCompany: Boolean!
+    }
+
+    type AuthResult{
         isCompany: Boolean!
     }
 

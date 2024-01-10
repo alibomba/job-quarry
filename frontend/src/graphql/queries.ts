@@ -60,3 +60,31 @@ export const IS_BOOKMARKED = gql`
         }
     }
 `;
+
+export const GET_OFFER = gql`
+    query($getOfferId: String!){
+        getOffer(id: $getOfferId){
+            _id
+            title
+            company{
+                _id
+                companyName
+                logo
+            }
+            mode
+            location
+            level
+            expiresAt
+            contractType
+            salary
+            requiredTechnologies
+            optionalTechnologies
+            description
+            tasks
+            required
+            optional
+            benefits
+            recruitmentStages
+        }
+    }
+`;

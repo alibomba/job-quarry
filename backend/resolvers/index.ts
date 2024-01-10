@@ -2,6 +2,7 @@ import authResolvers from "./authResolvers"
 import notificationResolvers from "./notificationResolvers"
 import offerResolvers from "./offerResolvers"
 import searchResolvers from "./searchResolvers"
+import applicationResolvers from "./applicationResolvers"
 
 export default {
     Query: {
@@ -13,7 +14,8 @@ export default {
     Mutation: {
         ...authResolvers.Mutation,
         ...notificationResolvers.Mutation,
-        ...offerResolvers.Mutation
+        ...offerResolvers.Mutation,
+        ...applicationResolvers.Mutation
     },
     // Subscription:{
     //     ...notificationResolvers.Subscription

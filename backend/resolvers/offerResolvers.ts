@@ -2,6 +2,7 @@ import { GraphQLError } from "graphql";
 import contextAuthentication from "../middleware/contextAuthentication"
 import { MyContext } from "../types"
 import { Bookmark, Offer } from "../models";
+import getAWSCompanyLogo from "../utils/getAWSCompanyLogo";
 
 export default {
     Query: {
@@ -26,6 +27,23 @@ export default {
             return {
                 success
             }
+        },
+        async getOffer(__: unknown, { id }: { id: string }) {
+            let offer;
+            try {
+                offer = await Offer.findById(id).populate('company');
+            } catch (err: any) {
+                if (err.name === 'CastError' && err.kind === 'ObjectId') {
+                    throw new GraphQLError('Nie znaleziono oferty', { extensions: { code: 'NOT_FOUND' } });
+                } else {
+                    throw new GraphQLError('', { extensions: { code: 'SERVER_ERROR' } });
+                }
+            }
+            if (!offer) throw new GraphQLError('Nie znaleziono oferty', { extensions: { code: 'NOT_FOUND' } });
+            // if (typeof offer.company !== 'string' && offer.company.logo) {
+            //     offer.company.logo = await getAWSCompanyLogo(offer.company.logo);
+            // }
+            return offer;
         }
     },
     Mutation: {

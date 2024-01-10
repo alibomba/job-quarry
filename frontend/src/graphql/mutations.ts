@@ -57,3 +57,11 @@ export const BOOKMARK = gql`
         }
     }
 `;
+
+export const SEND_APPLICATION = gql`
+    mutation($applicationInput: ApplicationInput!){
+        sendApplication(applicationInput: $applicationInput){
+            _id
+        }
+    }
+`;

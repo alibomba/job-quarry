@@ -1,2 +1,2 @@
 -graphql subscriptions w notifications component
--uncomment aws pulling logos in search resolvers
+-uncomment aws pulling logos in search and offer resolvers
