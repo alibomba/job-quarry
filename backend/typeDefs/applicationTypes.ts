@@ -15,6 +15,12 @@ export default `#graphql
         sentAt: DateTime!
     }
 
+    type ApplicationPaginationResponse{
+        currentPage: Int!
+        lastPage: Int!
+        data: [Application!]!
+    }
+
     input ApplicationInput{
         offerId: String!
         name: String!

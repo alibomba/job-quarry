@@ -156,3 +156,21 @@ export const GET_MY_OFFERS = gql`
         }
     }
 `;
+
+export const GET_MY_APPLICATIONS_COMPANY = gql`
+    query($page: Int!){
+        getMyApplicationsCompany(page: $page){
+            currentPage
+            lastPage
+            data{
+                _id
+                name
+                surname
+                email
+                offer{
+                    title
+                }
+            }
+        }
+    }
+`;

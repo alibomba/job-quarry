@@ -12,6 +12,7 @@ export default {
         ...authResolvers.Query,
         ...notificationResolvers.Query,
         ...offerResolvers.Query,
+        ...applicationResolvers.Query,
         ...searchResolvers.Query,
         ...userResolvers.Query,
         ...companyResolvers.Query
