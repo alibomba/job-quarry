@@ -100,8 +100,7 @@ const offer = new Schema<OfferI>({
     }
 });
 
-
-offer.post('deleteOne', async function (doc) {
+offer.post('findOneAndDelete', async function (doc) {
     const applications = await Application.find({ offer: doc._id });
     const thumbnailViews = await OfferThumbnailView.find({ offer: doc._id });
     const views = await OfferView.find({ offer: doc._id });

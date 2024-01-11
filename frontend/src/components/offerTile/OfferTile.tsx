@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../state/store';
 import { useLazyQuery, useMutation } from '@apollo/client';
 import { IS_BOOKMARKED } from '../../graphql/queries';
-import { BOOKMARK } from '../../graphql/mutations';
+import { ADD_THUMBNAIL_VIEW, BOOKMARK } from '../../graphql/mutations';
 import { Link } from 'react-router-dom';
 import { HiBuildingOffice2 } from 'react-icons/hi2';
 import { IoMdBriefcase } from 'react-icons/io';
@@ -14,6 +14,7 @@ import styles from './offerTile.module.css';
 import formatNumber from '../../utils/formatNumber';
 import Error from '../error/Error';
 import Popup from '../popup/Popup';
+import { useInView } from 'react-intersection-observer';
 
 const OfferTile = ({ _id, title, company: { companyName, logo }, mode, location, requiredTechnologies, salary }: OfferTile) => {
     const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
@@ -21,7 +22,11 @@ const OfferTile = ({ _id, title, company: { companyName, logo }, mode, location,
     const [error, setError] = useState<string | null>(null);
     const [isBookmarkedQuery] = useLazyQuery(IS_BOOKMARKED);
     const [bookmarkMutation] = useMutation(BOOKMARK, { refetchQueries: [{ query: IS_BOOKMARKED }] });
+    const [thumbnailViewMutation] = useMutation(ADD_THUMBNAIL_VIEW);
     const { isAuthorized, isCompany, isLoading } = useSelector((state: RootState) => state.auth);
+    const [ref, inView] = useInView({
+        triggerOnce: true
+    });
 
     useEffect(() => {
         async function fetchData() {
@@ -40,6 +45,19 @@ const OfferTile = ({ _id, title, company: { companyName, logo }, mode, location,
         fetchData();
 
     }, [isLoading]);
+
+    useEffect(() => {
+        async function addThumbnailView() {
+            if (inView) {
+                try {
+                    await thumbnailViewMutation({ variables: { addThumbnailViewId: _id } });
+                } catch (err) {
+                    setError('Coś poszło nie tak, spróbuj ponownie później...');
+                }
+            }
+        }
+        addThumbnailView();
+    }, [inView]);
 
     async function bookmark() {
         if (isLoading) return;
@@ -70,7 +88,7 @@ const OfferTile = ({ _id, title, company: { companyName, logo }, mode, location,
     }
 
     return (
-        <article className={styles.offer}>
+        <article ref={ref} className={styles.offer}>
             <Link to={`/oferta/${_id}`}>
                 <img className={styles.offer__img} src={logo || '/default.webp'} alt={`logo ${companyName}`} />
             </Link>

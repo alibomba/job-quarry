@@ -34,7 +34,6 @@ const MyOfferTile = ({ _id, title, salary, level, contractType, expiresAt, setOf
                 setTimeout(() => setPopup(prev => ({ ...prev, active: false })), 4000);
             } catch (err) {
                 setError('Coś poszło nie tak, spróbuj ponownie później...');
-                console.log(err);
             }
         }
     }

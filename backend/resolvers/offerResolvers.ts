@@ -106,7 +106,7 @@ export default {
             if (!offer) throw new GraphQLError('Nie znaleziono oferty', { extensions: { code: 'NOT_FOUND' } });
             if (typeof offer.company !== 'string' && offer.company._id != company._id) throw new GraphQLError('Nie możesz usunąć nie swojej oferty', { extensions: { code: 'FORBIDDEN' } });
             try {
-                await offer.deleteOne();
+                await Offer.findOneAndDelete({ _id: offer._id });
                 return {
                     success: true
                 }

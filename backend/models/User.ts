@@ -96,7 +96,7 @@ const user = new Schema({
     }
 });
 
-user.post('deleteOne', async function (doc) {
+user.post('findOneAndDelete', async function (doc) {
     const applications = await Application.find({ user: doc._id });
     const messages = await Message.find({ user: doc._id });
     const notifications = await Notification.find({ user: doc._id });

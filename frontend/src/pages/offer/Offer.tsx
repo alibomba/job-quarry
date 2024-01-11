@@ -10,7 +10,7 @@ import Loading from '../../components/loading/Loading';
 import Popup from '../../components/popup/Popup';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../state/store';
-import { BOOKMARK } from '../../graphql/mutations';
+import { ADD_VIEW, BOOKMARK } from '../../graphql/mutations';
 
 const Offer = () => {
     const { id } = useParams();
@@ -20,6 +20,7 @@ const Offer = () => {
     const [offerQuery] = useLazyQuery(GET_OFFER);
     const [isBookmarkedQuery] = useLazyQuery(IS_BOOKMARKED);
     const [bookmarkMutation] = useMutation(BOOKMARK, { refetchQueries: [{ query: IS_BOOKMARKED }] });
+    const [viewMutation] = useMutation(ADD_VIEW);
     const [isBookmarked, setIsBookmarked] = useState<boolean>(false);
     const [isOfferLoading, setIsOfferLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -39,6 +40,12 @@ const Offer = () => {
                 return;
             }
             setOffer(data.getOffer);
+            try {
+                await viewMutation({ variables: { addViewId: id } });
+            } catch (err) {
+                setError('Coś poszło nie tak, spróbuj ponownie później...');
+                return;
+            }
             setIsOfferLoading(false);
         }
 
@@ -92,7 +99,7 @@ const Offer = () => {
         section.scrollIntoView({ behavior: 'smooth' });
     }
 
-    if (isOfferLoading || !offer) {
+    if (isOfferLoading || !offer || isLoading) {
         return <Loading />
     }
 
@@ -112,14 +119,17 @@ const Offer = () => {
                         <h1 className={styles.header__title}>{offer.title}</h1>
                     </div>
                 </div>
-                <div className={styles.header__right}>
-                    <button onClick={bookmark} title={isBookmarked ? 'Usuń z zapisanych' : 'Zapisz ofertę'} className={styles.header__bookmark}>
-                        {
-                            isBookmarked ? <FaBookmark /> : <FaRegBookmark />
-                        }
-                    </button>
-                    <button onClick={toApplication} className={styles.header__button}>Aplikuj</button>
-                </div>
+                {
+                    !isCompany &&
+                    <div className={styles.header__right}>
+                        <button onClick={bookmark} title={isBookmarked ? 'Usuń z zapisanych' : 'Zapisz ofertę'} className={styles.header__bookmark}>
+                            {
+                                isBookmarked ? <FaBookmark /> : <FaRegBookmark />
+                            }
+                        </button>
+                        <button onClick={toApplication} className={styles.header__button}>Aplikuj</button>
+                    </div>
+                }
             </header>
             <main className={styles.main__main}>
                 <OfferInfo
@@ -157,7 +167,9 @@ const Offer = () => {
                 <OfferRecruitment
                     recruitmentStages={offer.recruitmentStages}
                 />
-                <ApplicationForm offerId={id!} />
+                {
+                    !isCompany && <ApplicationForm offerId={id!} />
+                }
             </main>
             <Popup active={popup.active} type={popup.type}>{popup.content}</Popup>
         </main>

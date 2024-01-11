@@ -73,3 +73,19 @@ export const DELETE_OFFER = gql`
         }
     }
 `;
+
+export const ADD_THUMBNAIL_VIEW = gql`
+    mutation($addThumbnailViewId: String!){
+        addThumbnailView(id: $addThumbnailViewId){
+            success
+        }
+    }
+`;
+
+export const ADD_VIEW = gql`
+    mutation($addViewId: String!){
+        addView(id: $addViewId){
+            success
+        }
+    }
+`;

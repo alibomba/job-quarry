@@ -69,7 +69,7 @@ const company = new Schema<CompanyI>({
     }
 });
 
-company.post('deleteOne', async function (doc) {
+company.post('findOneAndDelete', async function (doc) {
     const messages = await Message.find({ company: doc._id });
     const offers = await Offer.find({ company: doc._id });
     for (let message of messages) {
