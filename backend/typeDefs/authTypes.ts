@@ -63,15 +63,4 @@ export default `#graphql
         experience: [Experience!]!
         joinedAt: DateTime!
     }
-
-    type Company{
-        _id: String!
-        companyName: String!
-        email: String!
-        website: String
-        logo: String
-        socialMedia: SocialMedia
-        description: String
-        joinedAt: DateTime!
-    }
 `;

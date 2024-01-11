@@ -117,3 +117,29 @@ export const GET_USER_PROFILE = gql`
         }
     }
 `;
+
+export const GET_COMPANY_PROFILE = gql`
+    query($getCompanyId: String!){
+        getCompany(id: $getCompanyId){
+            _id
+            logo
+            companyName
+            socialMedia{
+                facebook
+                instagram
+                linkedin
+                github
+            }
+            description
+            website
+            offers{
+                _id
+                title
+                mode
+                location
+                requiredTechnologies
+                salary
+            }
+        }
+    }
+`;

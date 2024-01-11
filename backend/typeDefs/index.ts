@@ -8,7 +8,8 @@ import mutationTypes from "./mutationTypes";
 import searchTypes from "./searchTypes";
 import subscriptionTypes from "./subscriptionTypes";
 import offerTypes from "./offerTypes";
+import companyTypes from "./companyTypes";
 
-export default `${generalTypes} ${authTypes} ${notificationTypes} ${offerTypes} ${searchTypes} ${applicationTypes}
+export default `${generalTypes} ${authTypes} ${offerTypes} ${searchTypes} ${applicationTypes} ${companyTypes} ${notificationTypes}
 ${queryTypes} ${mutationTypes} `;
 // ${subscriptionTypes}
