@@ -143,3 +143,16 @@ export const GET_COMPANY_PROFILE = gql`
         }
     }
 `;
+
+export const GET_MY_OFFERS = gql`
+    query{
+        myOffers{
+            _id
+            title
+            salary
+            level
+            contractType
+            expiresAt
+        }
+    }
+`;

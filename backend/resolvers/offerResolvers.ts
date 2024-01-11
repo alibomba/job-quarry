@@ -44,6 +44,12 @@ export default {
             //     offer.company.logo = await getAWSCompanyLogo(offer.company.logo);
             // }
             return offer;
+        },
+        async myOffers(__: unknown, _: unknown, context: MyContext) {
+            const company = await contextAuthentication(context);
+            if (!company.isCompany) throw new GraphQLError('Użytkownik nie może mieć swoich ofert', { extensions: { code: 'FORBIDDEN' } });
+            const offers = await Offer.find({ company: company._id }).populate('company');
+            return offers;
         }
     },
     Mutation: {
@@ -81,6 +87,31 @@ export default {
                 } catch (err) {
                     throw new GraphQLError('', { extensions: { code: 'SERVER_ERROR' } });
                 }
+            }
+        },
+        async deleteOffer(__: unknown, { id }: { id: string }, context: MyContext) {
+            const company = await contextAuthentication(context);
+            if (!company.isCompany) throw new GraphQLError('Użytkownik nie może usuwać ofert', { extensions: { code: 'FORBIDDEN' } });
+            let offer;
+            try {
+                offer = await Offer.findById(id).populate('company');
+            } catch (err: any) {
+                if (err.name === 'CastError' && err.kind === 'ObjectId') {
+                    throw new GraphQLError('Nie znaleziono oferty', { extensions: { code: 'NOT_FOUND' } });
+                }
+                else {
+                    throw new GraphQLError('', { extensions: { code: 'SERVER_ERROR' } });
+                }
+            }
+            if (!offer) throw new GraphQLError('Nie znaleziono oferty', { extensions: { code: 'NOT_FOUND' } });
+            if (typeof offer.company !== 'string' && offer.company._id != company._id) throw new GraphQLError('Nie możesz usunąć nie swojej oferty', { extensions: { code: 'FORBIDDEN' } });
+            try {
+                await offer.deleteOne();
+                return {
+                    success: true
+                }
+            } catch (err) {
+                throw new GraphQLError('', { extensions: { code: 'SERVER_ERROR' } });
             }
         }
     }

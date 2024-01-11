@@ -65,3 +65,11 @@ export const SEND_APPLICATION = gql`
         }
     }
 `;
+
+export const DELETE_OFFER = gql`
+    mutation($deleteOfferId: String!){
+        deleteOffer(id: $deleteOfferId){
+            success
+        }
+    }
+`;
