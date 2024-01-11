@@ -88,3 +88,32 @@ export const GET_OFFER = gql`
         }
     }
 `;
+
+export const GET_USER_PROFILE = gql`
+    query($getUserId: String!){
+        getUser(id: $getUserId){
+            _id
+            profilePicture
+            name
+            surname
+            age
+            email
+            skills
+            socialMedia{
+                facebook
+                instagram
+                linkedin
+                github
+            }
+            description
+            portfolio
+            experience{
+                title
+                company
+                startDate
+                endDate
+                description
+            }
+        }
+    }
+`;

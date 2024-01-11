@@ -9,3 +9,5 @@ export { default as OfferTechnologies } from './offerTechnologies/OfferTechnolog
 export { default as OfferListSection } from './offerListSection/OfferListSection';
 export { default as OfferRecruitment } from './offerRecruitment/OfferRecruitment';
 export { default as ApplicationForm } from './applicationForm/ApplicationForm';
+export { default as UserProfileHeader } from './userProfileHeader/UserProfileHeader';
+export { default as UserProfileExperience } from './userProfileExperience/UserProfileExperience';
