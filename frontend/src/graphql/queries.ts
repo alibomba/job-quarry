@@ -174,3 +174,27 @@ export const GET_MY_APPLICATIONS_COMPANY = gql`
         }
     }
 `;
+
+export const GET_APPLICATION_COMPANY = gql`
+    query($getApplicationId: String!){
+        getApplication(id: $getApplicationId){
+            _id
+            name
+            surname
+            email
+            phoneNumber
+            CV
+            details
+            user{
+                _id
+                portfolio
+            }
+            offer{
+                _id
+                title
+            }
+            status
+            sentAt
+        }
+    }
+`;
