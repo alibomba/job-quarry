@@ -6,6 +6,7 @@ import applicationResolvers from "./applicationResolvers"
 import userResolvers from "./userResolvers"
 import companyResolvers from "./companyResolvers"
 import analyticsResolvers from "./analyticsResolvers"
+import settingsResolvers from "./settingsResolvers"
 
 export default {
     Query: {
@@ -15,14 +16,16 @@ export default {
         ...applicationResolvers.Query,
         ...searchResolvers.Query,
         ...userResolvers.Query,
-        ...companyResolvers.Query
+        ...companyResolvers.Query,
+        ...settingsResolvers.Query
     },
     Mutation: {
         ...authResolvers.Mutation,
         ...notificationResolvers.Mutation,
         ...offerResolvers.Mutation,
         ...applicationResolvers.Mutation,
-        ...analyticsResolvers.Mutation
+        ...analyticsResolvers.Mutation,
+        ...settingsResolvers.Mutation
     },
     Subscription: {
         ...notificationResolvers.Subscription

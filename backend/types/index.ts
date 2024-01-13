@@ -11,3 +11,4 @@ export { default as OfferQueryType } from './OfferQueryType';
 export { default as Offer } from './Offer';
 export { default as ApplicationInput } from './ApplicationInput';
 export { default as ApplicationChangeStatusInput } from './ApplicationChangeStatusInput';
+export { default as CompanySettingsInput } from './CompanySettingsInput';

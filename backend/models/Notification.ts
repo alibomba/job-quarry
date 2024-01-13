@@ -1,7 +1,6 @@
-import { model, Schema, Types } from 'mongoose';
+import { Document, model, Schema, Types } from 'mongoose';
 
-export interface NotificationI {
-    _id: string,
+export interface NotificationI extends Document {
     image?: string,
     message: string,
     redirect: string,
@@ -14,7 +13,6 @@ export interface NotificationI {
 const notification = new Schema<NotificationI>({
     image: {
         type: String,
-        required: true
     },
     message: {
         type: String,

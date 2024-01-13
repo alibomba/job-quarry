@@ -1,8 +1,8 @@
-import { model, Schema, Types } from 'mongoose';
+import { Document, model, Schema, Types } from 'mongoose';
 import { Application, OfferThumbnailView, OfferView } from '.';
 import { CompanyI } from './Company';
 
-export interface OfferI {
+export interface OfferI extends Document {
     title: string,
     mode: string,
     location: string,

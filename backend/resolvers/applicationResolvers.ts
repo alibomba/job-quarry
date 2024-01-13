@@ -73,13 +73,27 @@ export default {
             const { applicationInput: { name, surname, email, phoneNumber, cvUrl, details, offerId } } = applicationInput;
             const offer = await Offer.findById(offerId);
             if (!offer) throw new GraphQLError('Nie znaleziono oferty', { extensions: { code: 'NOT_FOUND' } });
+            let applicationPopulated;
             try {
                 const newApplication = await Application.create({ name, surname, email, phoneNumber, CV: cvUrl, details, offer: offerId, user: user && user._id });
-                const applicationPopulated = await newApplication.populate('offer user');
-                return applicationPopulated;
+                applicationPopulated = await newApplication.populate('offer user');
             } catch (err) {
                 throw new GraphQLError('', { extensions: { code: 'SERVER_ERROR' } });
             }
+            const companyId = new Types.ObjectId(offer.company as string);
+            const notification = new Notification({
+                image: 'other/application.png',
+                message: `Nowa aplikacja do oferty ${offer.title}`,
+                redirect: '/moje-aplikacje-firma',
+                companyRecipient: companyId
+            });
+            try {
+                await notification.save();
+            } catch (err) {
+                throw new GraphQLError('', { extensions: { code: 'SERVER_ERROR' } });
+            }
+            await context.pubsub.publish(`NOTIFICATION_${companyId.toString()}`, notification);
+            return applicationPopulated;
         },
         async changeApplicationStatus(__: unknown, { input: { id, status } }: ApplicationChangeStatusInput, context: MyContext) {
             const company = await contextAuthentication(context);
@@ -87,7 +101,7 @@ export default {
             if (status !== 'Oczekujące' && status !== 'Odrzucone' && status !== 'Zaakceptowane') throw new GraphQLError('Podaj poprawny status', { extensions: { code: 'VALIDATION_ERROR' } });
             let application;
             try {
-                application = await Application.findById(id);
+                application = await Application.findById(id).populate('offer');
             } catch (err: any) {
                 if (err.name === 'CastError' && err.kind === 'ObjectId') {
                     throw new GraphQLError('Nie znaleziono aplikacji', { extensions: { code: 'NOT_FOUND' } });
@@ -97,6 +111,8 @@ export default {
                 }
             }
             if (!application) throw new GraphQLError('Nie znaleziono aplikacji', { extensions: { code: 'NOT_FOUND' } });
+            const offer = application.offer as OfferI;
+            if (offer.company.toString() !== new Types.ObjectId(company._id).toString()) throw new GraphQLError('To nie Twoja oferta', { extensions: { code: 'FORBIDDEN' } });
             application.status = status;
             try {
                 await application.save();

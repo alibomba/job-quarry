@@ -1,2 +1,2 @@
--graphql subscriptions w notifications component
 -uncomment aws pulling logos in search and offer resolvers
+-powiadomienie dla firmy gdy wpadnie aplikacja
