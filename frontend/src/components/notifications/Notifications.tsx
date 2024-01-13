@@ -24,7 +24,7 @@ const Notifications = () => {
                             notifications.map(notification => {
                                 return (
                                     <Link key={notification._id} to={notification.redirect} className={styles.notification}>
-                                        <img className={styles.notification__img} src={notification.image} alt="miniatura powiadomienia" />
+                                        <img className={styles.notification__img} src={notification.image || '/default.webp'} alt="miniatura powiadomienia" />
                                         <span className={styles.notification__message}>{notification.message}</span>
                                     </Link>
                                 )

@@ -11,5 +11,4 @@ import offerTypes from "./offerTypes";
 import companyTypes from "./companyTypes";
 
 export default `${generalTypes} ${authTypes} ${offerTypes} ${searchTypes} ${applicationTypes} ${companyTypes} ${notificationTypes}
-${queryTypes} ${mutationTypes} `;
-// ${subscriptionTypes}
+${queryTypes} ${mutationTypes} ${subscriptionTypes}`;

@@ -7,7 +7,7 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../../state/store';
 import { setIsAuthorized } from '../../state/authSlice';
-import { useMutation } from '@apollo/client';
+import { useMutation, useApolloClient } from '@apollo/client';
 import { LOGOUT } from '../../graphql/mutations';
 import styles from './header.module.css';
 import { GET_AUTH } from '../../graphql/queries';
@@ -16,6 +16,7 @@ import useSetNotificationsToRead from '../../hooks/useSetNotificationsToRead';
 import Notifications from '../../components/notifications/Notifications';
 
 const Header = () => {
+    const apolloClient = useApolloClient();
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const setNotificationsToRead = useSetNotificationsToRead();
@@ -24,7 +25,12 @@ const Header = () => {
     const [areNotificationsVisible, setAreNotificationsVisible] = useState<boolean>(false);
     const [isNavActive, setIsNavActive] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
-    const [logoutMutation] = useMutation(LOGOUT, { refetchQueries: [{ query: GET_AUTH }] });
+    const [logoutMutation] = useMutation(LOGOUT, {
+        refetchQueries: [{ query: GET_AUTH }],
+        onCompleted: () => {
+            apolloClient.resetStore();
+        }
+    });
 
     async function logout() {
         try {

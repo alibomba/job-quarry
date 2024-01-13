@@ -24,7 +24,7 @@ export default {
         ...applicationResolvers.Mutation,
         ...analyticsResolvers.Mutation
     },
-    // Subscription:{
-    //     ...notificationResolvers.Subscription
-    // }
+    Subscription: {
+        ...notificationResolvers.Subscription
+    }
 }

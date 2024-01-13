@@ -1,6 +1,6 @@
 import { GraphQLError } from "graphql";
 import { User } from "../models";
-import getAWSUserPfp from "../utils/getAWSUserPfp";
+import getAWSResource from "../utils/getAWSResource";
 
 
 export default {
@@ -19,7 +19,7 @@ export default {
             }
             if (!user) throw new GraphQLError('Nie znaleziono użytkownika', { extensions: { code: 'NOT_FOUND' } });
             if (user.profilePicture) {
-                user.profilePicture = await getAWSUserPfp(user.profilePicture);
+                user.profilePicture = await getAWSResource(`pfp/${user.profilePicture}`);
             }
             return user;
         }

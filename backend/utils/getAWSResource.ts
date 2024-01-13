@@ -10,9 +10,8 @@ const s3 = new S3Client({
     region: process.env.AWS_BUCKET_REGION as string
 });
 
-async function getAWSCompanyLogo(path: string) {
-    const key = `logos/${path}`;
-    const command = new GetObjectCommand({ Bucket: process.env.AWS_BUCKET_NAME, Key: key });
+async function getAWSResource(path: string) {
+    const command = new GetObjectCommand({ Bucket: process.env.AWS_BUCKET_NAME, Key: path });
     try {
         const url = await getSignedUrl(s3, command, { expiresIn: 3600 });
         return url;
@@ -21,4 +20,4 @@ async function getAWSCompanyLogo(path: string) {
     }
 }
 
-export default getAWSCompanyLogo;
+export default getAWSResource;

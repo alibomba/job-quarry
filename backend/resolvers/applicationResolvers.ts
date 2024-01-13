@@ -1,11 +1,11 @@
 import { GraphQLError } from "graphql";
-import { ApplicationInput, MyContext } from "../types"
+import { ApplicationInput, MyContext, ApplicationChangeStatusInput } from "../types"
 import applicationValidation from "../utils/applicationValidation";
 import contextAuthentication from "../middleware/contextAuthentication";
-import { Application, Offer } from "../models";
+import { Application, Company, Notification, Offer } from "../models";
 import { OfferI } from "../models/Offer";
 import { Types } from "mongoose";
-import getAWSCV from "../utils/getAWSCV";
+import getAWSResource from "../utils/getAWSResource";
 
 export default {
     Query: {
@@ -56,7 +56,7 @@ export default {
             if (!application) throw new GraphQLError('Nie znaleziono aplikacji', { extensions: { code: 'NOT_FOUND' } });
             const offer = application.offer as OfferI;
             if (offer.company.toString() !== new Types.ObjectId(company._id).toString()) throw new GraphQLError('To nie Twoja oferta', { extensions: { code: 'FORBIDDEN' } });
-            application.CV = await getAWSCV(application.CV);
+            application.CV = await getAWSResource(`cvs/${application.CV}`);
             return application;
         }
     },
@@ -79,6 +79,49 @@ export default {
                 return applicationPopulated;
             } catch (err) {
                 throw new GraphQLError('', { extensions: { code: 'SERVER_ERROR' } });
+            }
+        },
+        async changeApplicationStatus(__: unknown, { input: { id, status } }: ApplicationChangeStatusInput, context: MyContext) {
+            const company = await contextAuthentication(context);
+            if (!company.isCompany) throw new GraphQLError('Użytkownik nie może otrzymywać aplikacji', { extensions: { code: 'FORBIDDEN' } });
+            if (status !== 'Oczekujące' && status !== 'Odrzucone' && status !== 'Zaakceptowane') throw new GraphQLError('Podaj poprawny status', { extensions: { code: 'VALIDATION_ERROR' } });
+            let application;
+            try {
+                application = await Application.findById(id);
+            } catch (err: any) {
+                if (err.name === 'CastError' && err.kind === 'ObjectId') {
+                    throw new GraphQLError('Nie znaleziono aplikacji', { extensions: { code: 'NOT_FOUND' } });
+                }
+                else {
+                    throw new GraphQLError('', { extensions: { code: 'SERVER_ERROR' } });
+                }
+            }
+            if (!application) throw new GraphQLError('Nie znaleziono aplikacji', { extensions: { code: 'NOT_FOUND' } });
+            application.status = status;
+            try {
+                await application.save();
+            } catch (err) {
+                throw new GraphQLError('', { extensions: { code: 'SERVER_ERROR' } });
+            }
+            if (application.user) {
+                const userId = new Types.ObjectId(application.user as string);
+                const companyDB = await Company.findById(company._id);
+                if (!companyDB) throw new GraphQLError('Firma nie istnieje', { extensions: { code: 'UNAUTHORIZED' } });
+                const notification = new Notification({
+                    image: companyDB.logo ? `logos/${companyDB.logo}` : '',
+                    message: `${companyDB.companyName} zmienił status Twojej aplikacji na: ${status}`,
+                    redirect: '/moje-aplikacje',
+                    userRecipient: userId
+                });
+                try {
+                    await notification.save();
+                } catch (err) {
+                    throw new GraphQLError('', { extensions: { code: 'SERVER_ERROR' } });
+                }
+                await context.pubsub.publish(`NOTIFICATION_${userId.toString()}`, notification);
+            }
+            return {
+                success: true
             }
         }
     }

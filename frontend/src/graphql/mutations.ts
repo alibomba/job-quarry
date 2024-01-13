@@ -89,3 +89,11 @@ export const ADD_VIEW = gql`
         }
     }
 `;
+
+export const CHANGE_APPLICATION_STATUS = gql`
+    mutation($input: ApplicationChangeStatusInput!){
+        changeApplicationStatus(input: $input){
+            success
+        }
+    }
+`;

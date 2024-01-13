@@ -1,6 +1,6 @@
 import { GraphQLError } from "graphql";
 import { Company, Offer } from "../models";
-import getAWSCompanyLogo from "../utils/getAWSCompanyLogo";
+import getAWSResource from "../utils/getAWSResource";
 
 
 export default {
@@ -20,7 +20,7 @@ export default {
             if (!company) throw new GraphQLError('Nie znaleziono firmy', { extensions: { code: 'NOT_FOUND' } });
             const offers = await Offer.find({ company: company._id });
             if (company.logo) {
-                company.logo = await getAWSCompanyLogo(company.logo);
+                company.logo = await getAWSResource(`logos/${company.logo}`);
             }
             return {
                 ...company.toJSON(),

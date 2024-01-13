@@ -1,6 +1,17 @@
 import { model, Schema, Types } from 'mongoose';
 
-const notification = new Schema({
+export interface NotificationI {
+    _id: string,
+    image?: string,
+    message: string,
+    redirect: string,
+    userRecipient?: string,
+    companyRecipient?: string,
+    seen: boolean,
+    createdAt: Date
+}
+
+const notification = new Schema<NotificationI>({
     image: {
         type: String,
         required: true
@@ -8,7 +19,7 @@ const notification = new Schema({
     message: {
         type: String,
         required: true,
-        maxLength: 50
+        maxLength: 100
     },
     redirect: {
         type: String,

@@ -30,4 +30,9 @@ export default `#graphql
         cvUrl: String!
         details: String
     }
+
+    input ApplicationChangeStatusInput{
+        id: String!
+        status: String!
+    }
 `;

@@ -2,7 +2,7 @@ import { Offer, Technology } from "../models";
 import { OfferQueryType, OfferSearchInput } from "../types"
 import searchValidation from "../utils/searchValidation"
 import mapEnumToQuery from "../utils/mapEnumToQuery";
-import getAWSCompanyLogo from "../utils/getAWSCompanyLogo";
+import getAWSResource from "../utils/getAWSResource";
 import { GraphQLError } from "graphql";
 
 export default {
@@ -56,7 +56,7 @@ export default {
             const offers = await Offer.find(query).skip(offset).limit(PER_PAGE).sort({ createdAt: -1 }).populate('company');
             // const offersWithLogos = await Promise.all(offers.map(async offer => {
             //     if (typeof offer.company !== 'string' && offer.company.logo) {
-            //         offer.company.logo = await getAWSCompanyLogo(offer.company.logo);
+            //         offer.company.logo = await getAWSResource(`logos/${offer.company.logo}`);
             //     }
             //     return offer;
             // }));

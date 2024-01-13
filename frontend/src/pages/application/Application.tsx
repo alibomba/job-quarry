@@ -1,24 +1,46 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { IoMdLink } from 'react-icons/io';
-import { useLazyQuery } from '@apollo/client';
-import { GET_APPLICATION_COMPANY } from '../../graphql/queries';
+import { useLazyQuery, useMutation } from '@apollo/client';
+import { GET_APPLICATION_COMPANY, GET_MY_APPLICATIONS_COMPANY } from '../../graphql/queries';
+import { CHANGE_APPLICATION_STATUS } from '../../graphql/mutations';
 import styles from './application.module.css';
 import Loading from '../../components/loading/Loading';
 import Error from '../../components/error/Error';
+import Popup from '../../components/popup/Popup';
 
 const Application = () => {
     const navigate = useNavigate();
     const { id } = useParams();
     const [applicationQuery] = useLazyQuery(GET_APPLICATION_COMPANY);
+    const [statusMutation] = useMutation(CHANGE_APPLICATION_STATUS, {
+        refetchQueries: [
+            { query: GET_APPLICATION_COMPANY }, { query: GET_MY_APPLICATIONS_COMPANY }
+        ]
+    })
     const [application, setApplication] = useState<ApplicationFull | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const [popup, setPopup] = useState<Popup>({ content: null, active: false, type: 'good' });
 
-    function handleStatusChange(e: React.ChangeEvent) {
+    async function handleStatusChange(e: React.ChangeEvent) {
         const input = e.target as HTMLInputElement;
         const span = input.nextElementSibling as HTMLSpanElement;
         const newStatus = span.innerText;
+        try {
+            await statusMutation({
+                variables: {
+                    input: {
+                        id,
+                        status: newStatus
+                    }
+                }
+            });
+            setPopup({ content: 'Zmieniono status aplikacji', active: true, type: 'good' });
+            setTimeout(() => setPopup(prev => ({ ...prev, active: false })));
+        } catch (err) {
+            setError('Coś poszło nie tak, spróbuj ponownie później...');
+        }
         setApplication(prev => {
             if (prev) {
                 return { ...prev, status: newStatus };
@@ -98,6 +120,7 @@ const Application = () => {
                 application.details && <p className={styles.main__description}>{application.details}</p>
             }
             <Link className={`${styles.main__button} ${styles.main__button_offerLink}`} to={`/oferta/${application.offer._id}`}>Oferta</Link>
+            <Popup active={popup.active} type={popup.type}>{popup.content}</Popup>
         </main>
     )
 }
