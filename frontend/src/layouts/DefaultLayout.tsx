@@ -1,18 +1,27 @@
 import { useEffect, useState } from 'react';
-import { useLazyQuery } from '@apollo/client';
+import { useLazyQuery, useSubscription } from '@apollo/client';
 import { GET_MY_NOTIFICATIONS } from '../graphql/queries';
 import { useSelector, useDispatch } from 'react-redux';
-import { setIsSomethingNew } from '../state/notificationSlice';
+import { setIsSomethingNew, setInitialNotifications, addNotification } from '../state/notificationSlice';
 import areThereNewNotifications from '../utils/areThereNewNotifications';
 import { Outlet } from "react-router-dom";
 import { Header, Footer } from "../sections";
 import { RootState } from '../state/store';
 import Error from '../components/error/Error';
 import Loading from '../components/loading/Loading';
+import { NOTIFICATION_SUBSCRIPTION } from '../graphql/subscriptions';
 
 const DefaultLayout = () => {
     const dispatch = useDispatch();
     const { isAuthorized, isLoading } = useSelector((state: RootState) => state.auth);
+    useSubscription(NOTIFICATION_SUBSCRIPTION, {
+        skip: !isAuthorized,
+        onData: (data) => {
+            const newNotification = data.data.data.notificationCreated;
+            dispatch(setIsSomethingNew(true));
+            dispatch(addNotification(newNotification));
+        }
+    });
     const [myNotificationsQuery] = useLazyQuery(GET_MY_NOTIFICATIONS);
     const [error, setError] = useState<string | null>(null);
 
@@ -25,6 +34,7 @@ const DefaultLayout = () => {
                     return;
                 }
                 dispatch(setIsSomethingNew(areThereNewNotifications(data.getMyNotifications)));
+                dispatch(setInitialNotifications(data.getMyNotifications));
             }
         }
 

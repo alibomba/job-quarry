@@ -1,19 +1,11 @@
-import { useState } from 'react';
-import { useQuery } from '@apollo/client';
-import { GET_MY_NOTIFICATIONS } from '../../graphql/queries';
 import { Link } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
 
 import styles from './notifications.module.css';
+import { RootState } from '../../state/store';
 
 const Notifications = () => {
-    const [notifications, setNotifications] = useState<UserNotification[]>([]);
-    useQuery(GET_MY_NOTIFICATIONS, {
-        onCompleted: (data) => {
-            const response = data.getMyNotifications;
-            setNotifications(response);
-        }
-    });
+    const { notifications } = useSelector((state: RootState) => state.notification);
 
     return (
         <div className={styles.notifications}>

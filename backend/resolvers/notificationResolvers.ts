@@ -11,12 +11,12 @@ export default {
             const user = await contextAuthentication(context);
             let notifications = [];
             if (user.isCompany) {
-                const notificationsFound = await Notification.find({ companyRecipient: user._id });
+                const notificationsFound = await Notification.find({ companyRecipient: user._id }).sort({ createdAt: -1 });
                 for (let notification of notificationsFound) {
                     notifications.push({ _id: notification._id, image: notification.image, message: notification.message, redirect: notification.redirect, recipient: notification.companyRecipient, seen: notification.seen, createdAt: notification.createdAt });
                 }
             } else {
-                const notificationsFound = await Notification.find({ userRecipient: user._id });
+                const notificationsFound = await Notification.find({ userRecipient: user._id }).sort({ createdAt: -1 });
                 for (let notification of notificationsFound) {
                     notifications.push({ _id: notification._id, image: notification.image, message: notification.message, redirect: notification.redirect, recipient: notification.userRecipient, seen: notification.seen, createdAt: notification.createdAt });
                 }
