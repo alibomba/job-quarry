@@ -198,3 +198,22 @@ export const GET_APPLICATION_COMPANY = gql`
         }
     }
 `;
+
+export const GET_COMPANY_SETTINGS = gql`
+    query{
+        getMeCompany{
+            _id
+            logo
+            companyName
+            email
+            socialMedia{
+                facebook
+                instagram
+                linkedin
+                github
+            }
+            description
+            website
+        }
+    }
+`;

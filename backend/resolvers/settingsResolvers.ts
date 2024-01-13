@@ -30,13 +30,13 @@ export default {
             me.companyName = companyName;
             me.email = email;
             if (password) me.password = await bcrypt.hash(password, 10);
-            if (website) me.website = website;
+            me.website = website;
             if (logo) me.logo = logo;
-            if (facebook) me.socialMedia.facebook = facebook;
-            if (instagram) me.socialMedia.instagram = instagram;
-            if (linkedin) me.socialMedia.linkedin = linkedin;
-            if (github) me.socialMedia.github = github;
-            if (description) me.description = description;
+            me.socialMedia.facebook = facebook;
+            me.socialMedia.instagram = instagram;
+            me.socialMedia.linkedin = linkedin;
+            me.socialMedia.github = github;
+            me.description = description;
             try {
                 await me.save();
                 return {

@@ -97,3 +97,11 @@ export const CHANGE_APPLICATION_STATUS = gql`
         }
     }
 `;
+
+export const UPDATE_COMPANY_SETTINGS = gql`
+    mutation($settingsInput: CompanySettingsInput!){
+        updateCompanySettings(settingsInput: $settingsInput){
+            success
+        }
+    }
+`;
