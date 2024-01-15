@@ -1,7 +1,9 @@
 import { GraphQLError } from "graphql";
 import contextAuthentication from "../middleware/contextAuthentication"
-import { MyContext } from "../types"
+import { MyContext, CreateOfferInput, UpdateOfferInput } from "../types"
 import { Bookmark, Offer } from "../models";
+import offerValidation from "../utils/offerValidation";
+import mapEnumToQuery from "../utils/mapEnumToQuery";
 
 export default {
     Query: {
@@ -47,7 +49,7 @@ export default {
         async myOffers(__: unknown, _: unknown, context: MyContext) {
             const company = await contextAuthentication(context);
             if (!company.isCompany) throw new GraphQLError('Użytkownik nie może mieć swoich ofert', { extensions: { code: 'FORBIDDEN' } });
-            const offers = await Offer.find({ company: company._id }).populate('company');
+            const offers = await Offer.find({ company: company._id }).populate('company').sort({ createdAt: -1 });
             return offers;
         }
     },
@@ -87,6 +89,77 @@ export default {
                     throw new GraphQLError('', { extensions: { code: 'SERVER_ERROR' } });
                 }
             }
+        },
+        async createOffer(__: unknown, input: CreateOfferInput, context: MyContext) {
+            const company = await contextAuthentication(context);
+            if (!company.isCompany) throw new GraphQLError('Użytkownik nie może dodawać ofert', { extensions: { code: 'FORBIDDEN' } });
+            offerValidation(input);
+            const { input: { title, mode, location, level, expiresAt, contractType, salary, requiredTechnologies, optionalTechnologies, description, tasks, required, optional, benefits, recruitmentStages } } = input;
+            const newOffer = new Offer({
+                title,
+                mode: mapEnumToQuery('mode', mode),
+                location,
+                level: mapEnumToQuery('level', level),
+                expiresAt: new Date(expiresAt),
+                contractType: mapEnumToQuery('contractType', contractType),
+                salary,
+                requiredTechnologies,
+                optionalTechnologies,
+                description,
+                tasks,
+                required,
+                optional,
+                benefits,
+                recruitmentStages,
+                company: company._id
+            });
+            try {
+                await newOffer.save();
+            } catch (err) {
+                throw new GraphQLError('', { extensions: { code: 'SERVER_ERROR' } });
+            }
+            return await newOffer.populate('company');
+        },
+        async updateOffer(__: unknown, input: UpdateOfferInput, context: MyContext) {
+            const company = await contextAuthentication(context);
+            if (!company.isCompany) throw new GraphQLError('Użytkownik nie może edytować ofert', { extensions: { code: 'FORBIDDEN' } });
+            const { input: { id } } = input;
+            if (!id) throw new GraphQLError('Identyfikator oferty jest wymagany', { extensions: { code: 'VALIDATION_ERROR' } });
+            let offer;
+            try {
+                offer = await Offer.findById(id);
+            } catch (err: any) {
+                if (err.name === 'CastError' && err.kind === 'ObjectId') {
+                    throw new GraphQLError('Oferta nie istnieje', { extensions: { code: 'NOT_FOUND' } });
+                }
+                else {
+                    throw new GraphQLError('', { extensions: { code: 'SERVER_ERROR' } });
+                }
+            }
+            if (!offer) throw new GraphQLError('Oferta nie istnieje', { extensions: { code: 'NOT_FOUND' } });
+            offerValidation(input);
+            const { input: { title, mode, location, level, expiresAt, contractType, salary, requiredTechnologies, optionalTechnologies, description, tasks, required, optional, benefits, recruitmentStages } } = input;
+            offer.title = title;
+            offer.mode = mapEnumToQuery('mode', mode) as string;
+            offer.location = location;
+            offer.level = mapEnumToQuery('level', level) as string;
+            offer.expiresAt = new Date(expiresAt);
+            offer.contractType = mapEnumToQuery('contractType', contractType) as string;
+            offer.salary = salary;
+            offer.requiredTechnologies = requiredTechnologies;
+            offer.optionalTechnologies = optionalTechnologies;
+            offer.description = description;
+            offer.tasks = tasks;
+            offer.required = required;
+            offer.optional = optional;
+            offer.benefits = benefits;
+            offer.recruitmentStages = recruitmentStages;
+            try {
+                await offer.save();
+            } catch (err) {
+                throw new GraphQLError('', { extensions: { code: 'SERVER_ERROR' } });
+            }
+            return await offer.populate('company');
         },
         async deleteOffer(__: unknown, { id }: { id: string }, context: MyContext) {
             const company = await contextAuthentication(context);

@@ -12,3 +12,5 @@ export { default as Offer } from './Offer';
 export { default as ApplicationInput } from './ApplicationInput';
 export { default as ApplicationChangeStatusInput } from './ApplicationChangeStatusInput';
 export { default as CompanySettingsInput } from './CompanySettingsInput';
+export { default as CreateOfferInput } from './CreateOfferInput';
+export { default as UpdateOfferInput } from './UpdateOfferInput';

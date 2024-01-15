@@ -176,6 +176,7 @@ const CompanySettings = () => {
     return (
         <form onSubmit={saveSettings} className={styles.form}>
             <div className={styles.form__row}>
+                <Link className={styles.form__button} to='/dodaj-oferte'>Dodaj ofertę</Link>
                 <Link className={styles.form__button} to='/moje-oferty'>Moje oferty</Link>
                 <Link className={styles.form__button} to='/moje-aplikacje-firma'>Moje aplikacje</Link>
             </div>

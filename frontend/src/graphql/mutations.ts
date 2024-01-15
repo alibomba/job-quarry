@@ -105,3 +105,19 @@ export const UPDATE_COMPANY_SETTINGS = gql`
         }
     }
 `;
+
+export const CREATE_OFFER = gql`
+    mutation($input: CreateOfferInput!){
+        createOffer(input: $input){
+            _id
+        }
+    }
+`;
+
+export const UPDATE_OFFER = gql`
+    mutation($input: UpdateOfferInput!){
+        updateOffer(input: $input){
+            _id
+        }
+    }
+`;
