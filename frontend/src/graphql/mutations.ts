@@ -121,3 +121,11 @@ export const UPDATE_OFFER = gql`
         }
     }
 `;
+
+export const UPDATE_USER_SETTINGS = gql`
+    mutation($settingsInput: UserSettingsInput!){
+        updateUserSettings(settingsInput: $settingsInput){
+            success
+        }
+    }
+`;

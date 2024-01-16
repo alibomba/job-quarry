@@ -1,5 +1,32 @@
-import { model, Schema } from 'mongoose';
+import { Document, model, Schema } from 'mongoose';
 import { Application, Message, Notification } from '.';
+
+export interface ExperienceSchema {
+    title: string,
+    company: string,
+    startDate: Date,
+    endDate?: Date,
+    description: string
+}
+export interface UserI extends Document {
+    name: string,
+    surname: string,
+    email: string,
+    age: number,
+    profilePicture?: string,
+    password: string,
+    description?: string,
+    portfolio?: string,
+    socialMedia: {
+        facebook?: string,
+        instagram?: string,
+        linkedin?: string,
+        github?: string
+    },
+    skills: string[],
+    experience: ExperienceSchema[],
+    joinedAt: Date
+}
 
 const experience = new Schema({
     title: {
@@ -26,7 +53,7 @@ const experience = new Schema({
     }
 });
 
-const user = new Schema({
+const user = new Schema<UserI>({
     name: {
         type: String,
         required: true,

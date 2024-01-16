@@ -217,3 +217,32 @@ export const GET_COMPANY_SETTINGS = gql`
         }
     }
 `;
+
+export const GET_USER_SETTINGS = gql`
+    query{
+        getMeUser{
+            _id
+            name
+            surname
+            email
+            age
+            profilePicture
+            description
+            portfolio
+            socialMedia{
+                facebook
+                instagram
+                linkedin
+                github
+            }
+            skills
+            experience{
+                title
+                company
+                startDate
+                endDate
+                description
+            }
+        }
+    }
+`;

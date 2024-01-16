@@ -42,7 +42,7 @@ async function companySettingsValidation(input: CompanySettingsInput, me: Compan
                 Key: `logos/${logo}`
             });
             await s3.send(command);
-        } catch (err: any) {
+        } catch (err) {
             throw new GraphQLError('Błąd przesyłania pliku', { extensions: { code: 'VALIDATION_ERROR' } });
         }
     }
