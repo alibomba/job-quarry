@@ -10,6 +10,7 @@ import subscriptionTypes from "./subscriptionTypes";
 import offerTypes from "./offerTypes";
 import companyTypes from "./companyTypes";
 import settingsTypes from "./settingsTypes";
+import analyticsTypes from "./analyticsTypes";
 
-export default `${generalTypes} ${authTypes} ${searchTypes} ${offerTypes} ${applicationTypes} ${companyTypes} ${notificationTypes} ${settingsTypes}
+export default `${generalTypes} ${authTypes} ${searchTypes} ${offerTypes} ${applicationTypes} ${companyTypes} ${notificationTypes} ${settingsTypes} ${analyticsTypes}
 ${queryTypes} ${mutationTypes} ${subscriptionTypes}`;

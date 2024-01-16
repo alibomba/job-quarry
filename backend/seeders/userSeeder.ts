@@ -2,6 +2,7 @@ import { User } from "../models";
 
 async function userSeeder() {
     await User.create({
+        _id: '65a6d145d2f2047fd74be82c',
         email: 'wojci.bro@gmail.com',
         name: 'Wojtek', surname: 'Brońka',
         age: 18,
@@ -23,7 +24,31 @@ async function userSeeder() {
             }
         ]
     });
-    await User.create({ email: 'ali.gamer@op.pl', name: 'Ali', surname: 'Gamer', age: 18, password: '$2b$10$a5xra9gFr6yHwrWmDIgNZ.70U3KNLeti9gRynCzi/8Qh2HT9faRWq' })
+    await User.create({ email: 'ali.gamer@op.pl', name: 'Ali', surname: 'Gamer', age: 18, password: '$2b$10$a5xra9gFr6yHwrWmDIgNZ.70U3KNLeti9gRynCzi/8Qh2HT9faRWq' });
+    await User.create({
+        _id: '65a6d145d2f2047fd74be785',
+        email: 'adam@gmail.com',
+        name: 'Adam',
+        surname: 'Kowalski',
+        age: 52,
+        password: '$2b$10$a5xra9gFr6yHwrWmDIgNZ.70U3KNLeti9gRynCzi/8Qh2HT9faRWq'
+    });
+    await User.create({
+        _id: '65a6d145d2f2047fd74be786',
+        email: 'piotr@gmail.com',
+        name: 'Piotr',
+        surname: 'Adamczyk',
+        age: 31,
+        password: '$2b$10$a5xra9gFr6yHwrWmDIgNZ.70U3KNLeti9gRynCzi/8Qh2HT9faRWq'
+    });
+    await User.create({
+        _id: '65a6d145d2f2047fd74be787',
+        email: 'dawid@gmail.com',
+        name: 'Dawid',
+        surname: 'Nowak',
+        age: 58,
+        password: '$2b$10$a5xra9gFr6yHwrWmDIgNZ.70U3KNLeti9gRynCzi/8Qh2HT9faRWq'
+    });
 }
 
 export default userSeeder;

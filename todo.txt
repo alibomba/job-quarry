@@ -1,2 +1,3 @@
 -uncomment aws pulling logos in search and offer resolvers
 -analytics
+-bookmarks

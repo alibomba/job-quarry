@@ -17,7 +17,8 @@ export default {
         ...searchResolvers.Query,
         ...userResolvers.Query,
         ...companyResolvers.Query,
-        ...settingsResolvers.Query
+        ...settingsResolvers.Query,
+        ...analyticsResolvers.Query
     },
     Mutation: {
         ...authResolvers.Mutation,

@@ -6,6 +6,7 @@ import userQueries from "./userQueries";
 import companyQueries from "./companyQueries";
 import applicationQueries from "./applicationQueries";
 import settingsQueries from "./settingsQueries";
+import analyticsQueries from "./analyticsQueries";
 
 export default `#graphql
     type Query{
@@ -17,6 +18,7 @@ export default `#graphql
         ${companyQueries}
         ${applicationQueries}
         ${settingsQueries}
+        ${analyticsQueries}
         getTechnologies: [String!]!
     }
 `;

@@ -16,3 +16,4 @@ export { default as CreateOfferInput } from './CreateOfferInput';
 export { default as UpdateOfferInput } from './UpdateOfferInput';
 export { default as UserSettingsInput } from './UserSettingsInput';
 export { default as Experience } from './Experience';
+export { default as AnalyticsInput } from './AnalyticsInput';

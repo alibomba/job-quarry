@@ -6,6 +6,8 @@ import companySeeder from "./companySeeder";
 import offerSeeder from './offerSeeder';
 import technologySeeder from './technologySeeder';
 import mongoose from "mongoose";
+import analyticsSeeder from './analyticsSeeder';
+import applicationSeeder from './applicationSeeder';
 
 async function truncate() {
     await Application.deleteMany();
@@ -28,6 +30,8 @@ async function main() {
     await companySeeder();
     await offerSeeder();
     await technologySeeder();
+    await analyticsSeeder();
+    await applicationSeeder();
 
     console.log('DB Seeded');
 }

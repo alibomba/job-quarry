@@ -3,6 +3,7 @@ import { Offer } from "../models";
 async function offerSeeder() {
     await Offer.insertMany([
         {
+            _id: "65a318dfb517b9b39c23d01c",
             title: 'Frontend Developer',
             mode: 'Stacjonarnie',
             location: 'Warszawa',
