@@ -1,6 +1,21 @@
-import { model, Schema, Types } from 'mongoose';
+import { Document, model, Schema, Types } from 'mongoose';
+import { UserI } from './User';
+import { OfferI } from './Offer';
 
-const application = new Schema({
+export interface ApplicationI extends Document {
+    name: string,
+    surname: string,
+    email: string,
+    phoneNumber: string,
+    CV: string,
+    details?: string,
+    user: string | UserI,
+    offer: string | OfferI,
+    status: string,
+    sentAt: Date
+}
+
+const application = new Schema<ApplicationI>({
     name: {
         type: String,
         required: true,

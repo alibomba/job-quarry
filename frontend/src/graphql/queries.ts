@@ -246,3 +246,21 @@ export const GET_USER_SETTINGS = gql`
         }
     }
 `;
+
+export const GET_MY_APPLICATIONS_USER = gql`
+    query{
+        getMyApplicationsUser{
+            _id
+            offer{
+                _id
+                title
+                company{
+                    _id
+                    logo
+                }
+                salary
+            }
+            status
+        }
+    }
+`;

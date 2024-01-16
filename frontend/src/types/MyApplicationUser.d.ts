@@ -3,11 +3,11 @@ type MyApplicationUser = {
     offer: {
         _id: string,
         title: string,
-        salary: number,
         company: {
             _id: string,
             logo?: string
         }
+        salary: number,
     },
     status: string
 }

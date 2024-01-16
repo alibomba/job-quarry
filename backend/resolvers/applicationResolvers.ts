@@ -6,6 +6,8 @@ import { Application, Company, Notification, Offer } from "../models";
 import { OfferI } from "../models/Offer";
 import { Types } from "mongoose";
 import getAWSResource from "../utils/getAWSResource";
+import { CompanyI } from "../models/Company";
+import { ApplicationI } from "../models/Application";
 
 export default {
     Query: {
@@ -58,6 +60,28 @@ export default {
             if (offer.company.toString() !== new Types.ObjectId(company._id).toString()) throw new GraphQLError('To nie Twoja oferta', { extensions: { code: 'FORBIDDEN' } });
             application.CV = await getAWSResource(`cvs/${application.CV}`);
             return application;
+        },
+        async getMyApplicationsUser(__: unknown, _: unknown, context: MyContext) {
+            const user = await contextAuthentication(context);
+            if (user.isCompany) throw new GraphQLError('Firma nie może składać aplikacji', { extensions: { code: 'FORBIDDEN' } });
+            const applications = await Application.find({ user: user._id }).populate({
+                path: 'offer',
+                populate: {
+                    path: 'company',
+                    model: 'Company'
+                }
+            }).populate('user').sort({ sentAt: -1 });
+            const applicationsWithLogos = await Promise.all(applications.map(async application => {
+                const offer = application.offer as OfferI;
+                const company = offer.company as CompanyI;
+                if (company.logo) {
+                    company.logo = await getAWSResource(`logos/${company.logo}`);
+                }
+                offer.company = company;
+                application.offer = offer;
+                return application;
+            }));
+            return applicationsWithLogos;
         }
     },
     Mutation: {
