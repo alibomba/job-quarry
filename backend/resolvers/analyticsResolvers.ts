@@ -5,6 +5,7 @@ import contextAuthentication from "../middleware/contextAuthentication";
 import { MongooseError } from "mongoose";
 import getAnalyticsDateQuery from "../utils/getAnalyticsDateQuery";
 import { UserI } from "../models/User";
+import applicationMutations from "../typeDefs/mutationTypes/applicationMutations";
 
 
 export default {
@@ -37,7 +38,7 @@ export default {
             };
             const applications = await Application.find({ offer: offer._id, ...sentAtDateQuery }).populate('user');
             const applicantsCategories = {
-                notSpecified: await Application.find({ offer: offer._id, user: { $exists: false } }).countDocuments(),
+                notSpecified: applications.filter(application => !application.user).length,
                 first: applications.filter(application => {
                     if (application.user) {
                         const user = application.user as UserI;

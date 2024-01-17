@@ -264,3 +264,27 @@ export const GET_MY_APPLICATIONS_USER = gql`
         }
     }
 `;
+
+export const GET_ANALYTICS = gql`
+    query($analyticsInput: AnalyticsInput!){
+        getAnalytics(analyticsInput: $analyticsInput){
+            totalViews
+            CTR{
+                percentage
+                thumbnailViewsMinusViews
+                views
+            }
+            applications
+            applicationsToViews
+            applicantsCategories{
+                notSpecified
+                first
+                second
+                third
+                fourth
+                fifth
+                sixth
+            }
+        }
+    }
+`;
