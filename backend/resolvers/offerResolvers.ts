@@ -4,6 +4,9 @@ import { MyContext, CreateOfferInput, UpdateOfferInput } from "../types"
 import { Bookmark, Offer } from "../models";
 import offerValidation from "../utils/offerValidation";
 import mapEnumToQuery from "../utils/mapEnumToQuery";
+import { OfferI } from "../models/Offer";
+import { CompanyI } from "../models/Company";
+import getAWSResource from "../utils/getAWSResource";
 
 export default {
     Query: {
@@ -51,6 +54,37 @@ export default {
             if (!company.isCompany) throw new GraphQLError('Użytkownik nie może mieć swoich ofert', { extensions: { code: 'FORBIDDEN' } });
             const offers = await Offer.find({ company: company._id }).populate('company').sort({ createdAt: -1 });
             return offers;
+        },
+        async getMyBookmarks(__: unknown, { page }: { page: number }, context: MyContext) {
+            const user = await contextAuthentication(context);
+            if (user.isCompany) throw new GraphQLError('Firma nie może mieć zapisanych ofert', { extensions: { code: 'VALIDATION_ERROR' } });
+            const PER_PAGE = 6;
+            const count = await Bookmark.countDocuments({ user: user._id });
+            const lastPage = Math.ceil(count / PER_PAGE);
+            if (count === 0) {
+                return {
+                    currentPage: 1,
+                    lastPage: 1,
+                    data: []
+                }
+            }
+            if (page > lastPage) throw new GraphQLError(`Jest tylko ${lastPage} stron`, { extensions: { code: 'VALIDATION_ERROR' } });
+            const offset = (page - 1) * PER_PAGE;
+            const bookmarks = await Bookmark.find({ user: user._id }).skip(offset).limit(PER_PAGE).sort({ createdAt: -1 }).populate({ path: 'offer', populate: { path: 'company', model: 'Company' } });
+            const offers = bookmarks.map(bookmark => bookmark.offer as OfferI);
+            const offersWithLogos = await Promise.all(offers.map(async offer => {
+                const company = offer.company as CompanyI;
+                if (company.logo) {
+                    company.logo = await getAWSResource(`logos/${company.logo}`);
+                    offer.company = company;
+                }
+                return offer;
+            }));
+            return {
+                currentPage: page,
+                lastPage,
+                data: offersWithLogos
+            }
         }
     },
     Mutation: {

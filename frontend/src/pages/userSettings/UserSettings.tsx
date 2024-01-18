@@ -252,6 +252,7 @@ const UserSettings = () => {
         <form onSubmit={saveSettings} className={styles.form}>
             <div className={styles.form__row}>
                 <Link to='/moje-aplikacje' className={styles.form__button}>Moje aplikacje</Link>
+                <Link to='/zapisane' className={styles.form__button}>Zapisane oferty</Link>
                 <Link to={`/profil/${userId}`} className={styles.form__button}>Podgląd profilu</Link>
             </div>
             <Input

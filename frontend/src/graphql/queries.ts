@@ -288,3 +288,24 @@ export const GET_ANALYTICS = gql`
         }
     }
 `;
+
+export const GET_MY_BOOKMARKS = gql`
+    query($page: Int!){
+        getMyBookmarks(page: $page){
+            currentPage
+            lastPage
+            data{
+                _id
+                title
+                company{
+                    companyName
+                    logo
+                }
+                mode
+                location
+                requiredTechnologies
+                salary
+            }
+        }
+    }
+`;
