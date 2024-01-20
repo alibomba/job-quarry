@@ -11,6 +11,7 @@ import offerTypes from "./offerTypes";
 import companyTypes from "./companyTypes";
 import settingsTypes from "./settingsTypes";
 import analyticsTypes from "./analyticsTypes";
+import messageTypes from "./messageTypes";
 
-export default `${generalTypes} ${authTypes} ${searchTypes} ${offerTypes} ${applicationTypes} ${companyTypes} ${notificationTypes} ${settingsTypes} ${analyticsTypes}
+export default `${generalTypes} ${authTypes} ${searchTypes} ${offerTypes} ${applicationTypes} ${companyTypes} ${notificationTypes} ${settingsTypes} ${analyticsTypes} ${messageTypes}
 ${queryTypes} ${mutationTypes} ${subscriptionTypes}`;

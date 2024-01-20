@@ -7,10 +7,13 @@ import { UserProfileHeader, UserProfileExperience } from '../../sections';
 import styles from './userProfile.module.css';
 import Loading from '../../components/loading/Loading';
 import Error from '../../components/error/Error';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../state/store';
 
 const UserProfile = () => {
     const navigate = useNavigate();
     const { id } = useParams();
+    const { isLoading: isAuthLoading, isCompany } = useSelector((state: RootState) => state.auth);
     const [profileQuery] = useLazyQuery(GET_USER_PROFILE);
     const [user, setUser] = useState<UserProfile | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -37,7 +40,7 @@ const UserProfile = () => {
     }, [id]);
 
 
-    if (isLoading || !user) {
+    if (isLoading || isAuthLoading || !user) {
         return <Loading />
     }
 
@@ -67,7 +70,10 @@ const UserProfile = () => {
                         <span>Portfolio</span>
                     </a>
                 }
-                <Link className={styles.main__button} to={`/czaty?id=${user._id}`}>Wyślij wiadomość</Link>
+                {
+                    isCompany &&
+                    <Link className={styles.main__button} to={`/czaty?id=${user._id}`}>Wyślij wiadomość</Link>
+                }
             </div>
             {
                 user.experience.length > 0 &&

@@ -17,7 +17,7 @@ const DefaultLayout = () => {
     useSubscription(NOTIFICATION_SUBSCRIPTION, {
         skip: !isAuthorized,
         onData: (data) => {
-            const newNotification = data.data.data.notificationCreated;
+            const newNotification = data.data.data.notificationCreated as UserNotification;
             dispatch(setIsSomethingNew(true));
             dispatch(addNotification(newNotification));
         }
@@ -54,7 +54,7 @@ const DefaultLayout = () => {
         <>
             <Header />
             <Outlet />
-            {/* <Footer /> */}
+            <Footer />
         </>
     )
 }

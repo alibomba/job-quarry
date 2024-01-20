@@ -179,6 +179,7 @@ const CompanySettings = () => {
                 <Link className={styles.form__button} to='/dodaj-oferte'>Dodaj ofertę</Link>
                 <Link className={styles.form__button} to='/moje-oferty'>Moje oferty</Link>
                 <Link className={styles.form__button} to='/moje-aplikacje-firma'>Moje aplikacje</Link>
+                <Link className={styles.form__button} to={`/firma/${settings._id}`}>Podgląd profilu</Link>
             </div>
             <Input
                 className={styles.form__input}

@@ -309,3 +309,21 @@ export const GET_MY_BOOKMARKS = gql`
         }
     }
 `;
+
+export const GET_CHATS = gql`
+    query($currentConversation: String){
+        getChats(currentConversation: $currentConversation){
+            conversations{
+                _id
+                image
+                isCompany
+                name
+            }
+            messages{
+                _id
+                isMine
+                content
+            }
+        }
+    }
+`;

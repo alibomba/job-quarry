@@ -1,1 +1,1 @@
-type CompanySettings = Omit<CompanyProfile, 'offers' | '_id'>
+type CompanySettings = Omit<CompanyProfile, 'offers'>

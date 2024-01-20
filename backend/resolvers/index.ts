@@ -7,6 +7,7 @@ import userResolvers from "./userResolvers"
 import companyResolvers from "./companyResolvers"
 import analyticsResolvers from "./analyticsResolvers"
 import settingsResolvers from "./settingsResolvers"
+import messageResolvers from "./messageResolvers"
 
 export default {
     Query: {
@@ -18,7 +19,8 @@ export default {
         ...userResolvers.Query,
         ...companyResolvers.Query,
         ...settingsResolvers.Query,
-        ...analyticsResolvers.Query
+        ...analyticsResolvers.Query,
+        ...messageResolvers.Query
     },
     Mutation: {
         ...authResolvers.Mutation,
@@ -26,9 +28,11 @@ export default {
         ...offerResolvers.Mutation,
         ...applicationResolvers.Mutation,
         ...analyticsResolvers.Mutation,
-        ...settingsResolvers.Mutation
+        ...settingsResolvers.Mutation,
+        ...messageResolvers.Mutation
     },
     Subscription: {
-        ...notificationResolvers.Subscription
+        ...notificationResolvers.Subscription,
+        ...messageResolvers.Subscription
     }
 }

@@ -44,9 +44,9 @@ export default {
                 }
             }
             if (!offer) throw new GraphQLError('Nie znaleziono oferty', { extensions: { code: 'NOT_FOUND' } });
-            // if (typeof offer.company !== 'string' && offer.company.logo) {
-            //     offer.company.logo = await getAWSResource(`logos/${offer.company.logo}`);
-            // }
+            if (typeof offer.company !== 'string' && offer.company.logo) {
+                offer.company.logo = await getAWSResource(`logos/${offer.company.logo}`);
+            }
             return offer;
         },
         async myOffers(__: unknown, _: unknown, context: MyContext) {

@@ -4,6 +4,7 @@ import offerMutation from "./offerMutation";
 import applicationMutations from "./applicationMutations";
 import analyticsMutations from "./analyticsMutations";
 import settingsMutations from "./settingsMutations";
+import messageMutations from "./messageMutations";
 
 export default `#graphql
     type Mutation{
@@ -13,5 +14,6 @@ export default `#graphql
         ${applicationMutations}
         ${analyticsMutations}
         ${settingsMutations}
+        ${messageMutations}
     }
 `;

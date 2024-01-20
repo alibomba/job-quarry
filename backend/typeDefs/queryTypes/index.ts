@@ -7,6 +7,7 @@ import companyQueries from "./companyQueries";
 import applicationQueries from "./applicationQueries";
 import settingsQueries from "./settingsQueries";
 import analyticsQueries from "./analyticsQueries";
+import messageQueries from "./messageQueries";
 
 export default `#graphql
     type Query{
@@ -19,6 +20,7 @@ export default `#graphql
         ${applicationQueries}
         ${settingsQueries}
         ${analyticsQueries}
+        ${messageQueries}
         getTechnologies: [String!]!
     }
 `;

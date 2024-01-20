@@ -129,3 +129,13 @@ export const UPDATE_USER_SETTINGS = gql`
         }
     }
 `;
+
+export const SEND_MESSAGE = gql`
+    mutation($messageInput: MessageInput!){
+        sendMessage(messageInput: $messageInput){
+            _id
+            isMine
+            content
+        }
+    }
+`;

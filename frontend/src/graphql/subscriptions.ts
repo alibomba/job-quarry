@@ -11,3 +11,14 @@ export const NOTIFICATION_SUBSCRIPTION = gql`
         }
     }
 `;
+
+export const MESSAGE_SUBSCRIPTION = gql`
+    subscription{
+        messageCreated{
+            _id
+            content
+            isMine
+            senderId
+        }
+    }
+`;

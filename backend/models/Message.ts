@@ -1,6 +1,16 @@
-import { model, Schema, Types } from 'mongoose';
+import { Document, model, Schema, Types } from 'mongoose';
+import { CompanyI } from './Company';
+import { UserI } from './User';
 
-const message = new Schema({
+export interface MessageI extends Document {
+    company: string | CompanyI,
+    user: string | UserI,
+    sender: string,
+    content: string,
+    sentAt: Date
+}
+
+const message = new Schema<MessageI>({
     company: {
         type: Types.ObjectId,
         ref: 'Company',

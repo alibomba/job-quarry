@@ -7,7 +7,6 @@ import { OfferI } from "../models/Offer";
 import { Types } from "mongoose";
 import getAWSResource from "../utils/getAWSResource";
 import { CompanyI } from "../models/Company";
-import { ApplicationI } from "../models/Application";
 
 export default {
     Query: {
